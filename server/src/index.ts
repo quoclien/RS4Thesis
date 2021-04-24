@@ -14,4 +14,10 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.listen(3000, () => console.log("Server is running in port 3000"));
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
+
+const port = process.env.PORT || 3001;
+
+app.listen(port, () => console.log(`Server is running in port ${port}`));
