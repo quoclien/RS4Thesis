@@ -1,8 +1,13 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import {Button, Container} from '@material-ui/core';
+import CustomizedRadios from "../components/CustomizedRadios";
 
 function HomePage() {
-    return <Button color="primary">Hello World</Button>;
+    return <Container fixed>
+        <div>Chon thuat toan:</div>
+        <CustomizedRadios></CustomizedRadios>
+        {/*<Button color="primary">Hello World</Button>*/}
+    </Container>;
 }
 
 export default HomePage;
