@@ -68,8 +68,8 @@ function StyledRadio(props) {
 export default function CustomizedRadios(props) {
     return (
         <FormControl component="fieldset">
-            <FormLabel component="legend">Algos</FormLabel>
-            <RadioGroup defaultValue="female" aria-label="gender" name="customized-radios">
+            <FormLabel component="legend">{props.legend}</FormLabel>
+            <RadioGroup defaultValue="" aria-label="" name="customized-radios" row={props.isRow}>
                 {
                     props.children.map(child => <FormControlLabel value={child.value} control={<StyledRadio/>} label={child.label} />)
                 }
