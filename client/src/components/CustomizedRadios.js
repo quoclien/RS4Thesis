@@ -60,24 +60,19 @@ function StyledRadio(props) {
             checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
             icon={<span className={classes.icon} />}
             {...props}
+            onClick={() => console.log(props.value)}
         />
     );
 }
 
-export default function CustomizedRadios() {
+export default function CustomizedRadios(props) {
     return (
         <FormControl component="fieldset">
             <FormLabel component="legend">Algos</FormLabel>
             <RadioGroup defaultValue="female" aria-label="gender" name="customized-radios">
-                <FormControlLabel value="content" control={<StyledRadio />} label="Content-based filtering" />
-                <FormControlLabel value="collab" control={<StyledRadio />} label="Collaborative-based filtering" />
-                <FormControlLabel value="hybrid" control={<StyledRadio />} label="Hybrid filtering" />
-                <FormControlLabel
-                    value="disabled"
-                    disabled
-                    control={<StyledRadio />}
-                    label="(Disabled option)"
-                />
+                {
+                    props.children.map(child => <FormControlLabel value={child.value} control={<StyledRadio/>} label={child.label} />)
+                }
             </RadioGroup>
         </FormControl>
     );
