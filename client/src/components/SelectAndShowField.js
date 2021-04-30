@@ -43,7 +43,7 @@ export default class SelectAndShowField extends React.Component{
 
     render(){
         return(
-            <Box display={"flex"} justifyContent={"center"} flexDirection={"row"} flexWrap={"nowrap"}>
+            <Box display={"flex"} justifyContent={"center"} flexDirection={"row"} flexWrap={"nowrap"} m={1} marginBottom={2}>
                 <TextField label={textFieldLabel} value={this.state.value} onChange={this.handleChange} disabled fullWidth></TextField>
                 <CustomizedSelect
                     menuItems={menuItems}
