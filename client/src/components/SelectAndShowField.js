@@ -39,7 +39,7 @@ export default class SelectAndShowField extends React.Component{
         return(
             <Grid container spacing={4}>
                 <Grid item xs={6}>
-                    <TextField label={textFieldLabel} value={this.state.value} onChange={this.handleChange}></TextField>
+                    <TextField label={textFieldLabel} value={this.state.value} onChange={this.handleChange} disabled></TextField>
                 </Grid>
                 <Grid item xs={6}>
                     <CustomizedSelect

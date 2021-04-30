@@ -18,17 +18,19 @@ export default class CustomizedSelect extends React.Component{
     }
 
     render() {
-        <Select
-            labelId={this.props.labelId}
-            id={this.props.id}
-            value={this.state.value}
-            onChange={this.handleChange}
-        >
-            {
-                this.props.menuItems.forEach(item => {
-                    return <MenuItem value={this.props.menuItems[item].value}>{this.props.menuItems[item].label}</MenuItem>
-                })
-            }
-        </Select>
+        return(
+            <Select
+                labelId={this.props.labelId}
+                id={this.props.id}
+                value={this.state.value}
+                onChange={this.handleChange}
+            >
+                {
+                    this.props.menuItems.map(item => {
+                        return <MenuItem value={item.value}>{item.label}</MenuItem>
+                    })
+                }
+            </Select>
+        );
     }
 }
