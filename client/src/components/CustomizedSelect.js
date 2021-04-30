@@ -14,6 +14,7 @@ export default class CustomizedSelect extends React.Component{
         this.setState({
             value: event.target.value
         })
+        this.props.handleChange(event);
     }
 
     render() {
