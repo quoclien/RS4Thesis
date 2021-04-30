@@ -24,6 +24,7 @@ export default class CustomizedSelect extends React.Component{
                 id={this.props.id}
                 value={this.state.value}
                 onChange={this.handleChange}
+                fullWidth
             >
                 {
                     this.props.menuItems.map(item => {
