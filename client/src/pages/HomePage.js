@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container} from '@material-ui/core';
+import {Button, Container, Divider} from '@material-ui/core';
 import CustomizedRadios from "../components/CustomizedRadios";
 import CustomizedPaper from "../components/CustomizedPaper";
 
@@ -24,7 +24,9 @@ function HomePage() {
             legend={"Choose one algo:"}
             isRow={true}
         ></CustomizedRadios>
+        <Divider />
         <CustomizedPaper></CustomizedPaper>
+        <Divider />
     </Container>;
 }
 
