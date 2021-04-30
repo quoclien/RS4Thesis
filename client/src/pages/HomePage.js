@@ -18,15 +18,13 @@ function HomePage() {
             label: "Hybrid Filtering",
         }
     ];
-    let paperContent =
-        <div>Hello world</div>;
     return <Container fixed>
         <CustomizedRadios
             children ={choices}
-            legend={"Chon thuat toan:"}
+            legend={"Choose one algo:"}
             isRow={true}
         ></CustomizedRadios>
-        <CustomizedPaper children={paperContent}></CustomizedPaper>
+        <CustomizedPaper></CustomizedPaper>
     </Container>;
 }
 

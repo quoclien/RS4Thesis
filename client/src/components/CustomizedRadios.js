@@ -6,12 +6,14 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import {Typography} from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
         '&:hover': {
             backgroundColor: 'transparent',
         },
+        padding: 20,
     },
     icon: {
         borderRadius: '50%',
@@ -68,7 +70,11 @@ function StyledRadio(props) {
 export default function CustomizedRadios(props) {
     return (
         <FormControl component="fieldset">
-            <FormLabel component="legend">{props.legend}</FormLabel>
+            <FormLabel component="legend">
+                <Typography variant={"h2"} component={"h2"} color={"black"} align={"center"}>
+                    {props.legend}
+                </Typography>
+            </FormLabel>
             <RadioGroup defaultValue="" aria-label="" name="customized-radios" row={props.isRow}>
                 {
                     props.children.map(child => <FormControlLabel value={child.value} control={<StyledRadio/>} label={child.label} />)

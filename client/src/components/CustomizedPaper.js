@@ -25,10 +25,11 @@ function generateFakeData(n)
 export default function CustomizedPaper(props){
     return (
         <Paper
-            variant={"outlined"}
+            // variant={"outlined"}
             className={
                 {height: "200px"}
             }
+            elevation={0}
         >
             <Grid container justify={"space-around"}>
                 {
