@@ -33,7 +33,7 @@ export default function CustomizedPaper(props){
         >
             <Grid container justify={"space-around"}>
                 {
-                    generateFakeData(8)
+                    generateFakeData(10)
                 }
             </Grid>
         </Paper>
