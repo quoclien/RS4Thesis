@@ -12,14 +12,16 @@ const useStyles = makeStyles((theme) => ({
 
     },
     content: {
-        marginTop: "1000px"
+        marginTop: "80px",
     }
 }))
 
 const productLines = {
-    product: [],
-    item: [],
-    others: []
+    products: [],
+    items: [],
+    others: [],
+    misc: [],
+    notes: []
 }
 
 function HomePage() {
@@ -41,7 +43,7 @@ function HomePage() {
     ];
     return <Container fixed>
         <Dashboard/>
-        <Grid container classes={classes.content}>
+        <Grid container className={classes.content}>
             <Grid item xs={12}>
                 {/*<CustomizedRadios*/}
                 {/*    children ={choices}*/}
@@ -53,6 +55,13 @@ function HomePage() {
                     lineTitle={"You should try"}
                     lineOfProducts={productLines}
                     >
+                </RecommenderLine>
+            </Grid>
+            <Grid item xs={12}>
+                <RecommenderLine
+                    lineTitle={"Others also try"}
+                    lineOfProducts={productLines}
+                >
                 </RecommenderLine>
             </Grid>
             {/*<Divider/>*/}

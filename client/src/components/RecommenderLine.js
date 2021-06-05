@@ -28,7 +28,7 @@ function generateLineOfProducts(products) {
     return (
         <Container>
             <div>
-                <Typography component={"h1"} variant={"h6"}>
+                <Typography component={"h2"} variant={"h5"} className={{fontFamily: "Arial", fontWeight: "bold", fontSize: "30"}}>
                     {props.lineTitle}
                 </Typography>
             </div>
