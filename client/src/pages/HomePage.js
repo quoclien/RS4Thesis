@@ -5,6 +5,7 @@ import CustomizedPaper from "../components/CustomizedPaper";
 import SelectAndShowField from "../components/SelectAndShowField";
 import Dashboard from "../components/Dashboard";
 import {makeStyles} from "@material-ui/core/styles";
+import RecommenderLine from "../components/RecommenderLine";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "1000px"
     }
 }))
+
+const productLines = {
+    product: [],
+    item: [],
+    others: []
+}
 
 function HomePage() {
 
@@ -35,22 +42,28 @@ function HomePage() {
     return <Container fixed>
         <Dashboard/>
         <Grid container classes={classes.content}>
-            <Grid item>
-                <CustomizedRadios
-                    children ={choices}
-                    legend={"Choose one algo:"}
-                    isRow={true}
-                ></CustomizedRadios>
+            <Grid item xs={12}>
+                {/*<CustomizedRadios*/}
+                {/*    children ={choices}*/}
+                {/*    legend={"Choose one algo:"}*/}
+                {/*    isRow={true}*/}
+                {/*    */}
+                {/*></CustomizedRadios>*/}
+                <RecommenderLine
+                    lineTitle={"You should try"}
+                    lineOfProducts={productLines}
+                    >
+                </RecommenderLine>
             </Grid>
-            <Divider/>
-            <Grid item>
-                <SelectAndShowField></SelectAndShowField>
-            </Grid>
-            <Divider />
-            <Grid item>
-                <CustomizedPaper></CustomizedPaper>
-            </Grid>
-            <Divider />
+            {/*<Divider/>*/}
+            {/*<Grid item>*/}
+            {/*    <SelectAndShowField></SelectAndShowField>*/}
+            {/*</Grid>*/}
+            {/*<Divider />*/}
+            {/*<Grid item>*/}
+            {/*    <CustomizedPaper></CustomizedPaper>*/}
+            {/*</Grid>*/}
+            {/*<Divider />*/}
         </Grid>
     </Container>;
 }

@@ -7,7 +7,7 @@ export default function RecommenderLine(props){
 
 function generateLineOfProducts(products) {
     let data = [];
-    for (let i = 0; i < products.length; i++)
+    for (let i = 0; i < Object.keys(products).length; i++)
     {
         data.push(
             <Grid item>
@@ -21,19 +21,20 @@ function generateLineOfProducts(products) {
             </Grid>
         );
     }
+    console.log(products.length);
     return data;
 
 }
     return (
-        <Grid container>
-            <Grid item={12}>
+        <Container>
+            <div>
                 <Typography component={"h1"} variant={"h6"}>
                     {props.lineTitle}
                 </Typography>
-            </Grid>
-            <Grid item={13}>
+            </div>
+            <Grid container>
                 {generateLineOfProducts(props.lineOfProducts)}
             </Grid>
-        </Grid>
+        </Container>
     );
 }
