@@ -106,7 +106,7 @@ export default function Dashboard() {
                     >
                         <AccountCircleIcon/>
                     </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                    <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
                         {websiteName}
                     </Typography>
                     <IconButton

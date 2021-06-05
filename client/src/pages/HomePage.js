@@ -4,9 +4,20 @@ import CustomizedRadios from "../components/CustomizedRadios";
 import CustomizedPaper from "../components/CustomizedPaper";
 import SelectAndShowField from "../components/SelectAndShowField";
 import Dashboard from "../components/Dashboard";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+
+    },
+    content: {
+        marginTop: "1000px"
+    }
+}))
 
 function HomePage() {
+
+    const classes = useStyles();
     let choices = [
         {
             value: "content",
@@ -23,16 +34,22 @@ function HomePage() {
     ];
     return <Container fixed>
         <Dashboard/>
-        <Grid container>
-            <CustomizedRadios
-                children ={choices}
-                legend={"Choose one algo:"}
-                isRow={true}
-            ></CustomizedRadios>
+        <Grid container classes={classes.content}>
+            <Grid item>
+                <CustomizedRadios
+                    children ={choices}
+                    legend={"Choose one algo:"}
+                    isRow={true}
+                ></CustomizedRadios>
+            </Grid>
             <Divider/>
-            <SelectAndShowField></SelectAndShowField>
+            <Grid item>
+                <SelectAndShowField></SelectAndShowField>
+            </Grid>
             <Divider />
-            <CustomizedPaper></CustomizedPaper>
+            <Grid item>
+                <CustomizedPaper></CustomizedPaper>
+            </Grid>
             <Divider />
         </Grid>
     </Container>;
