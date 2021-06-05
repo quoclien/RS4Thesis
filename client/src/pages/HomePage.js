@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button, Container, Divider} from '@material-ui/core';
+import {Button, Container, Divider, Grid} from '@material-ui/core';
 import CustomizedRadios from "../components/CustomizedRadios";
 import CustomizedPaper from "../components/CustomizedPaper";
 import SelectAndShowField from "../components/SelectAndShowField";
 import Dashboard from "../components/Dashboard";
+
 
 function HomePage() {
     let choices = [
@@ -22,16 +23,18 @@ function HomePage() {
     ];
     return <Container fixed>
         <Dashboard/>
-        <CustomizedRadios
-            children ={choices}
-            legend={"Choose one algo:"}
-            isRow={true}
-        ></CustomizedRadios>
-        <Divider/>
-        <SelectAndShowField></SelectAndShowField>
-        <Divider />
-        <CustomizedPaper></CustomizedPaper>
-        <Divider />
+        <Grid container>
+            <CustomizedRadios
+                children ={choices}
+                legend={"Choose one algo:"}
+                isRow={true}
+            ></CustomizedRadios>
+            <Divider/>
+            <SelectAndShowField></SelectAndShowField>
+            <Divider />
+            <CustomizedPaper></CustomizedPaper>
+            <Divider />
+        </Grid>
     </Container>;
 }
 
