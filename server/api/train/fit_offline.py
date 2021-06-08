@@ -7,7 +7,7 @@ from pathlib import Path
 from mongo import db
 from api.product import product_controller
 
-MODELS = ['ubr', 'iir', 'ctf']
+MODELS = ['ubr', 'iir', 'ctf', 'mf']
 
 
 def fit_ctf(raw_data):
@@ -39,6 +39,7 @@ def fit_iir(raw_data):
     # Compress model
     os.system(f'gzip -kf {str(p)}')
 
+
 def fit_ubr(raw_data):
     urb_rec = UBRRecommender(options={
         '__use_cols': ['app_id', 'author', 'rating']
@@ -52,12 +53,28 @@ def fit_ubr(raw_data):
     # # Compress model
     # os.system(f'gzip -kf {str(p)}')
 
+
+def fit_mf(raw_data):
+    clean_data = prepare_trainser(raw_data)
+    mf_rec = MFRecommend(clean_data, K=2, lam=0.1, print_every=2,
+                         learning_rate=2, max_iter=2, user_based=0)
+    mf_rec.fit()
+
+    # Save trained model
+    p = Path(__file__).parent / 'mf_rec/mf_rec.joblib'
+    joblib.dump(mf_rec, p)
+    # Compress model
+    os.system(f'gzip -kf {str(p)}')
+
+
 if __name__ == '__main__':
     load_dotenv(verbose=True)
     sys.path.append(str(Path(__file__).parent.parent))
     from api.train.ctf_rec.model import CTFTextRecommender
     from api.train.iir_rec.model import IIRatingRecommender
     from api.train.ubr_rec.model import UBRRecommender
+    from api.train.mf_rec.model import MFRecommend
+    from api.train.mf_rec.utils import prepare_trainser
 
     parser = argparse.ArgumentParser(description='Train/Fit rs model')
     parser.add_argument('model', metavar='model', type=str, choices=MODELS,
@@ -74,7 +91,13 @@ if __name__ == '__main__':
         reviews_collection = db.reviews
         raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
         fit_iir(raw_data)
-    elif model == 'ubr':
+    elif model == 'mf':
+
         reviews_collection = db.reviews
-        raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1, 'author' : 1})
+        raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
+        fit_mf(raw_data)
+    elif model == 'ubr':
+        reviews_collection = db.ratings
+        raw_data = reviews_collection.find(
+            {}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
         fit_ubr(raw_data)

@@ -2,7 +2,6 @@ import joblib
 from pathlib import Path
 from flask import Blueprint
 from flask import request as req
-from api.product import product_controller
 from mongo import db
 from utils import to_dict
 
