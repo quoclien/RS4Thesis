@@ -13,6 +13,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {ExitToApp} from "@material-ui/icons";
+import history from "../utils/History";
+
 
 const drawerWidth = 0;
 
@@ -90,6 +92,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function handleSignOut()
+{
+    history.push("/");
+}
+
 export default function Dashboard() {
     const classes = useStyles();
 
@@ -113,6 +120,7 @@ export default function Dashboard() {
                         color="inherit"
                         edge="end"
                         aria-label="sign out"
+                        onClick={() => handleSignOut()}
                         className={clsx(classes.exitButton)}
                     >
                         <ExitToApp/>
