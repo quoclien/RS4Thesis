@@ -3,6 +3,10 @@ import logo from "./logo.svg";
 import "./App.css";
 import HomePage from "./pages/HomePage.js"
 import SignIn from "./pages/SignIn";
+import {
+  Router,
+  Route
+} from "react-router-dom";
 
 
 function App() {
