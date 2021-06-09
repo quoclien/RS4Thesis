@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import HomePage from "./pages/HomePage.js"
+import SignIn from "./pages/SignIn";
 
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       //       {/*<Button color="primary">Hello World</Button>*/}
       //   </header>
       // </div>
-      <HomePage></HomePage>
+      // <HomePage></HomePage>
+      <SignIn></SignIn>
   );
 }
 
