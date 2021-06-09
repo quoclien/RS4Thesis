@@ -7,6 +7,7 @@ import {
   Router,
   Route
 } from "react-router-dom";
+import history from "./utils/History";
 
 
 function App() {
@@ -27,7 +28,15 @@ function App() {
       //   </header>
       // </div>
       // <HomePage></HomePage>
-      <SignIn></SignIn>
+      // <SignIn></SignIn>
+      <Router history={history}>
+        <Route exact path="/">
+          <SignIn></SignIn>
+        </Route>
+        <Route path="/home">
+          <HomePage></HomePage>
+        </Route>
+      </Router>
   );
 }
 
