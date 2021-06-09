@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -59,8 +59,8 @@ function StyledRadio(props) {
             className={classes.root}
             disableRipple
             color="default"
-            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-            icon={<span className={classes.icon} />}
+            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)}/>}
+            icon={<span className={classes.icon}/>}
             {...props}
             onClick={() => console.log(props.value)}
         />
@@ -77,7 +77,8 @@ export default function CustomizedRadios(props) {
             </FormLabel>
             <RadioGroup defaultValue="" aria-label="" name="customized-radios" row={props.isRow}>
                 {
-                    props.children.map(child => <FormControlLabel value={child.value} control={<StyledRadio/>} label={child.label} />)
+                    props.children.map(child => <FormControlLabel value={child.value} control={<StyledRadio/>}
+                                                                  label={child.label}/>)
                 }
             </RadioGroup>
         </FormControl>

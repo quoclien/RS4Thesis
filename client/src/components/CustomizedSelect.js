@@ -1,8 +1,8 @@
 import React from "react"
 import {MenuItem, Select} from "@material-ui/core";
 
-export default class CustomizedSelect extends React.Component{
-    constructor(props){
+export default class CustomizedSelect extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             value: "",
@@ -18,7 +18,7 @@ export default class CustomizedSelect extends React.Component{
     }
 
     render() {
-        return(
+        return (
             <Select
                 labelId={this.props.labelId}
                 id={this.props.id}

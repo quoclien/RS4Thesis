@@ -8,13 +8,13 @@ const useStyles = makeStyles({
     }
 })
 
-export default function CustomizedCard(props){
+export default function CustomizedCard(props) {
     const classes = useState();
-    return(
+    return (
         <Card className={classes.root} elevation={0}>
-        <CardContent>
-            {props.cardContent}
-        </CardContent>
+            <CardContent>
+                {props.cardContent}
+            </CardContent>
             <CardActions>
                 {props.cardAction ? props.cardAction : ""}
             </CardActions>

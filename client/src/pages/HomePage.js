@@ -1,16 +1,11 @@
 import React from 'react';
-import {Button, Container, Divider, Grid} from '@material-ui/core';
-import CustomizedRadios from "../components/CustomizedRadios";
-import CustomizedPaper from "../components/CustomizedPaper";
-import SelectAndShowField from "../components/SelectAndShowField";
+import {Container, Grid} from '@material-ui/core';
 import Dashboard from "../components/Dashboard";
 import {makeStyles} from "@material-ui/core/styles";
 import RecommenderLine from "../components/RecommenderLine";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-
-    },
+    root: {},
     content: {
         marginTop: "80px",
     }
@@ -54,7 +49,7 @@ function HomePage() {
                 <RecommenderLine
                     lineTitle={"You should try"}
                     lineOfProducts={productLines}
-                    >
+                >
                 </RecommenderLine>
             </Grid>
             <Grid item xs={12}>
