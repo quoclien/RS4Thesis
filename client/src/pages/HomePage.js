@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Grid} from '@material-ui/core';
 import Dashboard from "../components/Dashboard";
 import {makeStyles} from "@material-ui/core/styles";
-import RecommenderLine from "../components/RecommenderLine";
+import ProductLine from "../components/ProductLine";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -46,18 +46,18 @@ function HomePage() {
                 {/*    isRow={true}*/}
                 {/*    */}
                 {/*></CustomizedRadios>*/}
-                <RecommenderLine
+                <ProductLine
                     lineTitle={"You should try"}
                     lineOfProducts={productLines}
                 >
-                </RecommenderLine>
+                </ProductLine>
             </Grid>
             <Grid item xs={12}>
-                <RecommenderLine
+                <ProductLine
                     lineTitle={"Others also try"}
                     lineOfProducts={productLines}
                 >
-                </RecommenderLine>
+                </ProductLine>
             </Grid>
             {/*<Divider/>*/}
             {/*<Grid item>*/}

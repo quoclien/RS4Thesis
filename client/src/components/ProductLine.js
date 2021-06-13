@@ -3,7 +3,7 @@ import {Container, Grid, Typography} from "@material-ui/core";
 import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
 
-export default function RecommenderLine(props) {
+export default function ProductLine(props) {
 
     function generateLineOfProducts(products) {
         let data = [];
