@@ -6,8 +6,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 
 
@@ -36,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
-    profileButton: {
+    leftButton: {
         marginRight: 36,
     },
-    exitButton: {
+    rightButton: {
         marginLeft: 36,
     },
     title: {
@@ -87,11 +85,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function handleSignOut() {
-    history.push("/");
-}
-
-export default function Dashboard() {
+export default function Dashboard(props) {
     const classes = useStyles();
 
     return (
@@ -103,9 +97,10 @@ export default function Dashboard() {
                         color="inherit"
                         edge="start"
                         aria-label="open profile"
-                        className={clsx(classes.profileButton)}
+                        onClick={() => props.handleLeftButtonClick()}
+                        className={clsx(classes.leftButton)}
                     >
-                        <AccountCircleIcon/>
+                        {props.leftButtonIcon}
                     </IconButton>
                     <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
                         {websiteName}
@@ -114,10 +109,10 @@ export default function Dashboard() {
                         color="inherit"
                         edge="end"
                         aria-label="sign out"
-                        onClick={() => handleSignOut()}
-                        className={clsx(classes.exitButton)}
+                        onClick={() => props.handleRightButtonClick()}
+                        className={clsx(classes.rightButton)}
                     >
-                        <ExitToApp/>
+                        {props.rightButtonIcon}
                     </IconButton>
                 </Toolbar>
             </AppBar>
