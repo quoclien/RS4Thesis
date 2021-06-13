@@ -27,7 +27,7 @@ function handleSignOut() {
 }
 
 function handleOpenProfile(){
-
+    history.push("/profile");
 }
 
 

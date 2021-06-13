@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage.js"
 import SignIn from "./pages/SignIn";
 import {Route, Router} from "react-router-dom";
 import history from "./utils/History";
+import UserProfile from "./pages/UserProfile";
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
             </Route>
             <Route path="/home">
                 <HomePage></HomePage>
+            </Route>
+            <Route path="/profile">
+                <UserProfile></UserProfile>
             </Route>
         </Router>
     );
