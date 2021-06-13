@@ -116,4 +116,4 @@ dist
 .pnp.*
 server/datasets/
 
-.idea/vcs.xml
+.idea/
