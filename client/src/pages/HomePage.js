@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Container, Grid} from '@material-ui/core';
 import Dashboard from "../components/Dashboard";
 import {makeStyles} from "@material-ui/core/styles";
@@ -6,6 +6,9 @@ import ProductLine from "../components/ProductLine";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
+const axios = require('axios').default;
+
+const url = "http://127.0.0.1:5000/ctf_rec/:item_id";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -14,13 +17,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const productLines = {
-    products: [],
-    items: [],
-    others: [],
-    misc: [],
-    notes: []
-}
+let productLines = [
+    1,2,3,4,5
+]
+
 
 function handleSignOut() {
     history.push("/");
@@ -32,22 +32,25 @@ function handleOpenProfile(){
 
 
 function HomePage() {
+    const [products, setProducts] = useState(productLines);
+
+    useEffect(() => {
+        // axios.get(url).then(response => {
+        //     productLines = response.data;
+        //     products = productLines;
+        //     console.log(productLines);
+        // });
+        // axios({
+        //     url: url,
+        //     method: "GET",
+        //     headers: {"Access-Control-Allow-Origin": "*"},
+        //     params: {
+        //         item_id: "60af6c73585bb9dc632b911b"
+        //     }
+        // })
+    })
 
     const classes = useStyles();
-    let choices = [
-        {
-            value: "content",
-            label: "Content-based filtering"
-        },
-        {
-            value: "collab",
-            label: "Collaborative-based filtering",
-        },
-        {
-            value: "hybrid",
-            label: "Hybrid Filtering",
-        }
-    ];
     return <Container fixed>
         <Dashboard
             leftButtonIcon={<AccountCircleIcon/>}
@@ -57,15 +60,9 @@ function HomePage() {
         ></Dashboard>
         <Grid container className={classes.content}>
             <Grid item xs={12}>
-                {/*<CustomizedRadios*/}
-                {/*    children ={choices}*/}
-                {/*    legend={"Choose one algo:"}*/}
-                {/*    isRow={true}*/}
-                {/*    */}
-                {/*></CustomizedRadios>*/}
                 <ProductLine
                     lineTitle={"You should try"}
-                    lineOfProducts={productLines}
+                    lineOfProducts={products}
                 >
                 </ProductLine>
             </Grid>

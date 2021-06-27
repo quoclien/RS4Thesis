@@ -13,6 +13,14 @@ function handleSignOut(){
     history.push("/");
 }
 
+const productLines = {
+    products: [],
+    items: [],
+    others: [],
+    misc: [],
+    notes: []
+}
+
 export default function UserProfile(props){
     return(
         <fragment>
@@ -22,7 +30,10 @@ export default function UserProfile(props){
                 handleLeftButtonClick={handleOpenHomePage}
                 handleRightButtonClick={handleSignOut}/>
             <UserInfo></UserInfo>
-            <ProductLine></ProductLine>
+            <ProductLine
+                lineTitle={"You have reviewed those products: "}
+                lineOfProducts={productLines}
+            ></ProductLine>
         </fragment>
     );
 }

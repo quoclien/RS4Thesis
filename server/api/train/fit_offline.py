@@ -14,7 +14,7 @@ def fit_ctf(raw_data):
     # Initiate and train model
     ctf_text_rec = CTFTextRecommender(options={
         '__language': 'english',
-        '__use_cols': ['title', 'title_orig']
+        '__use_cols': ['product_description', 'product']
     })
     data_items = ctf_text_rec.prepare_trainset(raw_data)
     ctf_text_rec.fit(data_items)
@@ -54,17 +54,17 @@ def fit_ubr(raw_data):
     # os.system(f'gzip -kf {str(p)}')
 
 
-def fit_mf(raw_data):
-    clean_data = prepare_trainser(raw_data)
-    mf_rec = MFRecommend(clean_data, K=2, lam=0.1, print_every=2,
-                         learning_rate=2, max_iter=2, user_based=0)
-    mf_rec.fit()
+# def fit_mf(raw_data):
+#     clean_data = prepare_trainser(raw_data)
+#     mf_rec = MFRecommend(clean_data, K=2, lam=0.1, print_every=2,
+#                          learning_rate=2, max_iter=2, user_based=0)
+#     mf_rec.fit()
 
-    # Save trained model
-    p = Path(__file__).parent / 'mf_rec/mf_rec.joblib'
-    joblib.dump(mf_rec, p)
-    # Compress model
-    os.system(f'gzip -kf {str(p)}')
+#     # Save trained model
+#     p = Path(__file__).parent / 'mf_rec/mf_rec.joblib'
+#     joblib.dump(mf_rec, p)
+#     # Compress model
+#     os.system(f'gzip -kf {str(p)}')
 
 
 if __name__ == '__main__':
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     from api.train.ctf_rec.model import CTFTextRecommender
     from api.train.iir_rec.model import IIRatingRecommender
     from api.train.ubr_rec.model import UBRRecommender
-    from api.train.mf_rec.model import MFRecommend
+    # from api.train.mf_rec.model import MFRecommend
     from api.train.mf_rec.utils import prepare_trainser
 
     parser = argparse.ArgumentParser(description='Train/Fit rs model')
@@ -85,17 +85,17 @@ if __name__ == '__main__':
 
     if model == 'ctf':
         raw_data = product_controller.find_product(
-            {}, {'_id': 1, 'title': 1, 'title_orig': 1})
+            {}, {'_id': 1, 'product_description': 1, 'product': 1})
         fit_ctf(raw_data)
     elif model == 'iir':
         reviews_collection = db.reviews
         raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
         fit_iir(raw_data)
-    elif model == 'mf':
+    # elif model == 'mf':
 
-        reviews_collection = db.reviews
-        raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
-        fit_mf(raw_data)
+    #     reviews_collection = db.reviews
+    #     raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
+    #     fit_mf(raw_data)
     elif model == 'ubr':
         reviews_collection = db.ratings
         raw_data = reviews_collection.find(
