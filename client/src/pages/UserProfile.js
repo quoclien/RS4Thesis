@@ -4,6 +4,7 @@ import Dashboard from "../components/Dashboard";
 import HomeIcon from '@material-ui/icons/Home';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
+import {Container} from "@material-ui/core";
 
 function handleOpenHomePage(){
     history.push("/home");
@@ -13,13 +14,7 @@ function handleSignOut(){
     history.push("/");
 }
 
-const productLines = {
-    products: [],
-    items: [],
-    others: [],
-    misc: [],
-    notes: []
-}
+const productLines = [1,2,3,4,5]
 
 export default function UserProfile(props){
     return(
@@ -29,11 +24,13 @@ export default function UserProfile(props){
                 rightButtonIcon={<ExitToApp/>}
                 handleLeftButtonClick={handleOpenHomePage}
                 handleRightButtonClick={handleSignOut}/>
-            <UserInfo></UserInfo>
-            <ProductLine
-                lineTitle={"You have reviewed those products: "}
-                lineOfProducts={productLines}
-            ></ProductLine>
+            <Container>
+                <UserInfo></UserInfo>
+                <ProductLine
+                    lineTitle={"You have reviewed those products: "}
+                    lineOfProducts={productLines}
+                ></ProductLine>
+            </Container>
         </fragment>
     );
 }

@@ -7,10 +7,15 @@ const useStyle = makeStyles((theme) =>({
         alignItems: 'center',
         justifyContent: 'center',
         flexFlow: "column wrap",
-        marginTop: "80px"
+        marginTop: "80px",
+        marginBottom: "10px"
     },
     flexChild: {
 
+    },
+    bigAvatar: {
+        width: theme.spacing(7),
+        height: theme.spacing(7)
     }
 }))
 
@@ -19,11 +24,16 @@ export default function UserInfo(props){
     return(
         <div className={classes.flexParent}>
             <div className={classes.flexChild}>
-                <Avatar alt="Profile avatar" src={"../assets/images/reactlogo192.png"}></Avatar>
+                <Avatar alt="Kelvin Nash" src={"../assets/images/reactlogo192.png"} className={classes.bigAvatar}></Avatar>
             </div>
             <div className={classes.flexChild}>
-                <Typography variant={"h3"} component={"p"}>
-                    Name and age
+                <Typography variant={"h6"} component={"p"}>
+                    Kelvin Nash
+                </Typography>
+            </div>
+            <div className={classes.flexChild}>
+                <Typography variant={"h7"} component={"p"}>
+                    25 Year Olds
                 </Typography>
             </div>
         </div>
