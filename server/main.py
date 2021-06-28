@@ -8,9 +8,11 @@ from flask import Response as res
 from mongo import client, db
 from bson.json_util import dumps, loads
 from api import routes
+from flask_cors import CORS
 
 # init app
 app = Flask(__name__)
+CORS(app)
 
 # load envs
 env_path = Path(__file__).parent / '.env'
