@@ -7,6 +7,7 @@ from flask import request as req
 from flask import Response as res
 from mongo import client, db
 from bson.json_util import dumps, loads
+from flask_cors import CORS
 from api import routes
 from flask_cors import CORS
 
@@ -22,7 +23,6 @@ app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 app.config['DB_NAME'] = os.getenv('DB_NAME')
 
 # connect database
-
 app.client = client
 app.db = db
 
@@ -53,7 +53,6 @@ if __name__ == '__main__':
     load_dotenv(verbose=True)
 
     FLASK_ENV = os.getenv('FLASK_ENV')
-    # FLASK_HOST = os.getenv('FLASK_HOST')
     FLASK_PORT = os.getenv('FLASK_PORT')
 
     app.env = FLASK_ENV

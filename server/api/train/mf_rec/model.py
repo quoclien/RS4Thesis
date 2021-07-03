@@ -65,25 +65,23 @@ class MFRecommend:
             # normalize
             self.Y_data_n[ids, 2] = ratings - self.mu[n]
 
-            def loss(self):
-        
+    def loss(self):
         L = 0
         for i in range(self.n_ratings):
             # user, item, rating
             n, m, rate = int(self.Y_data_n[i, 0]), int(
                 self.Y_data_n[i, 1]), self.Y_data_n[i, 2]
-            
+
             L += 0.5*(rate - self.X[m, :].dot(self.W[:, n]))**2
 
         # take average
-        
+
         L /= self.n_ratings
         # regularization, don't ever forget this
-        
+
         L += 0.5*self.lam*(np.linalg.norm(self.X, 'fro') +
                            np.linalg.norm(self.W, 'fro'))
-        return 
-        L
+        return L
 
     def get_items_rated_by_user(self, user_id):
         """

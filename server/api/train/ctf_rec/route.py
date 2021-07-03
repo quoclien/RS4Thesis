@@ -12,3 +12,5 @@ def recommend(item_id):
     pids = ctf_rec.recommend(item_id)
     products = product_controller.get_products({'_id': {'$in': pids}})
     return {'data': products}
+
+    

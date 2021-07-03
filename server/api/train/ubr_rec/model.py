@@ -14,27 +14,28 @@ class UBRRecommender:
         print('Preparing UBR Text trainerset...')
 
         df = pd.DataFrame(raw_data)
+        df['rating'] = df['rating'].astype(int)
 
         df = df.groupby(
-            by=['author', 'app_id']).rating.sum().reset_index()
+            by=['user_id', 'movie_id']).rating.sum().reset_index()
 
-        pivot_df = df.pivot(
-            index="author", columns="app_id", values="rating")
-        pivot_df = df.fillna(0)
+        df = df.pivot(
+            index="user_id", columns="movie_id", values="rating")
+        df = df.fillna(0)
 
-        self.__clean_mat = pivot_df
-        print(pivot_df.head())
+        self.__clean_mat = df
         print('Preparing UBR Text successful...')
-        return pivot_df
+        return df
 
     def fit(self, cleaned_data):
         print('data_items shape: ', cleaned_data.shape)
         print('Begin training model UBR Text...')
 
         std_df = cleaned_data.apply(standardize)
-        product_similarity = cosine_similarity(std_df.T)
+
+        product_similarity = cosine_similarity(std_df)
         self.__sim_mat = product_similarity
-        print("Fit model successful !")
+        print('Training model UBR Text successful...')
 
     def get_similarity_products(self, product_id, user_rating):
         similarity_score = self.__sim_mat[product_id]*user_rating
