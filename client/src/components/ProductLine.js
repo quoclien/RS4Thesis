@@ -23,8 +23,10 @@ export default function ProductLine(props) {
                 <Grid item key={i}>
                     <CustomizedCard
                         cardContent={<ProductCard
-                            imageSrc={'../assets/images/reactlogo192.png'}
-                            index={i}
+                            imageSrc={products[i].url}
+                            key={products[i].id}
+                            name={products[i].name}
+                            price={products[i].price}
                         ></ProductCard>}
                         cardAction={""}
                     />
