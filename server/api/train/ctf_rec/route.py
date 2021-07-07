@@ -9,8 +9,8 @@ ctf_rec = joblib.load(Path(__file__).parent / 'ctf_rec.joblib')
 
 @ctf_rec_blueprint.route('/<string:item_id>', methods=['GET'])
 def recommend(item_id):
-    print(item_id)
     pids = ctf_rec.recommend(item_id)
-    print(pids)
     products = product_controller.get_products({'_id': {'$in': pids}})
     return {'data': products}
+
+    

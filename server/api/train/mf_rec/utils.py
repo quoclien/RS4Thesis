@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 def prepare_trainser(raw_data):
   ratings_base = pd.DataFrame(raw_data)
   ratings = ratings_base.values
-
+  print(ratings[:, :2])
   # indices in Python start from 0
   ratings[:, :2] -= 1
 

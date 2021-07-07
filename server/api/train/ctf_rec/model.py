@@ -2,7 +2,7 @@ import pandas as pd
 from bson.objectid import ObjectId
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from api.train.ctf_rec.text_utils import remove_html, remove_non_ascii, remove_punctuation
+from api.train.ctf_rec.text_utils import remove_html, remove_non_ascii, remove_punctuation, remove_stop_words
 
 class CTFTextRecommender:
     """
@@ -37,7 +37,7 @@ class CTFTextRecommender:
         # clean column
         df[col_combined] = df[use_cols].astype(str).apply(lambda x: ' '.join(x), axis=1)
         df[col_cleaned] = df[col_combined].apply(func=remove_non_ascii)
-        # df[col_cleaned] = df[col_cleaned].apply(func=remove_stop_words)
+        df[col_cleaned] = df[col_cleaned].apply(func=remove_stop_words)
         df[col_cleaned] = df[col_cleaned].apply(func=remove_punctuation)
         df[col_cleaned] = df[col_cleaned].apply(func=remove_html)
 
@@ -70,7 +70,6 @@ class CTFTextRecommender:
         df = self.__data_cleaned
         sim = self.__sim_mat
         idx = df.index[df['_id'] == iid]
-        print(idx)
         similar_indices = sim[idx[0]].argsort()[:-n_items:-1]
 
         pids = []

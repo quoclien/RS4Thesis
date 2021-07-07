@@ -8,3 +8,6 @@ load_dotenv(dotenv_path=env_path, verbose=True)
 
 client = MongoClient(os.getenv('MONGO_URI'))
 db = client[os.getenv('DB_NAME')]
+
+
+
