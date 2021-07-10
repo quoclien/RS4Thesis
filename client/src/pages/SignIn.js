@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import history from "../utils/History";
 import axios from "axios";
 
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -33,77 +34,91 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const url = "http://127.0.0.1:5000/user/login";
-
-function handleSignIn(acc, pass) {
-    axios.post(url, {
-        username: acc,
-        password: pass
-    }).then((response) => {
-        localStorage.setItem("token", response.data);
-        // history.push("/home");
-        console.log(response.data);
-    });
-}
-
-export default function SignIn() {
+export default function SignIn(props) {
     const classes = useStyles();
     const [account, setAccount] = useState("");
     const [password, setPassword] = useState("");
 
+    const url = "http://127.0.0.1:5000/user/login";
+
+    const handleSignIn = (acc, pass)  => {
+        axios.post(url, {
+            username: acc,
+            password: pass
+        }).then((response) => {
+            if (response.data.hasOwnProperty("error"))
+            {
+                props.showSnackbar("Please check your username and password", "error");
+            }
+            else
+            {
+                props.showSnackbar("Welcome back", "success");
+                localStorage.setItem("token", response.data);
+                history.push("/home");
+            }
+        });
+    }
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        value={account}
-                        onChange={e => setAccount(e.target.value)}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary"/>}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="button"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleSignIn(account, password)}
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
-                </form>
-            </div>
-        </Container>
+        <React.Fragment>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            value={account}
+                            onChange={e => {
+                                setAccount(e.target.value)
+                            }}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={e => {
+                                setPassword(e.target.value)
+                            }}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary"/>}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="button"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                handleSignIn(account, password)
+                            }}
+                            className={classes.submit}
+                        >
+                            Sign In
+                        </Button>
+                    </form>
+                </div>
+            </Container>
+        </React.Fragment>
     );
 }
