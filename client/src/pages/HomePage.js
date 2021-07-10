@@ -8,8 +8,6 @@ import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 const axios = require('axios').default;
 
-const url = "http://127.0.0.1:5000/ctf_rec/60af6c73585bb9dc632b911b";
-
 const useStyles = makeStyles((theme) => ({
     root: {},
     content: {
@@ -84,29 +82,31 @@ let productsOthersLiked = [
 ]
 
 
-function handleSignOut() {
-    history.push("/");
-}
-
-function handleOpenProfile(){
-    history.push("/profile");
-}
-
-
 function HomePage() {
     const [products, setProducts] = useState(0);
 
+    const url = "http://127.0.0.1:5000/ucf_rec/60963da2b2a5dad152d960be";
+
+    function handleSignOut() {
+        history.push("/");
+    }
+
+    function handleOpenProfile(){
+        history.push("/profile");
+    }
+
     useEffect(() => {
-        // axios.get(url, {
-        //         headers: {"Access-Control-Allow-Origin": "*"},
-        //         // params: {
-        //         //     item_id: "60af6c73585bb9dc632b911b"
-        //         // }
-        // }).then(response => {
-        //     productLines = response.data;
-        //     setProducts(productLines);
-        //     console.log(productLines);
-        // });
+        axios.get(url, {
+                headers: {"Access-Control-Allow-Origin": "*"},
+                params: {
+                    page: 0,
+                    limit: 10
+                }
+        }).then(response => {
+            let productLines = response.data;
+            // setProducts(productLines);
+            console.log(productLines);
+        });
     }, [])
 
     const classes = useStyles();

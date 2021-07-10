@@ -53,7 +53,7 @@ export default function SignIn(props) {
             else
             {
                 props.showSnackbar("Welcome back", "success");
-                localStorage.setItem("token", response.data);
+                localStorage.setItem("token", response.data.data);
                 history.push("/home");
             }
         });

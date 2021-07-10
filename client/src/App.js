@@ -15,7 +15,7 @@ function NotiStackWrapper() {
         <Router history={history}>
             <Route exact path="/">
                 <SignIn
-                    showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant})}}
+                    showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant, autoHideDuration: 2000})}}
                 ></SignIn>
             </Route>
             <Route path="/home">
@@ -31,15 +31,6 @@ function NotiStackWrapper() {
 function App() {
 
     return (
-        // <div className="App">
-        //   <header className="App-header">
-        //     <img src={logo} className="App-logo" alt="logo" />
-        //     <p>{!data ? "Loading..." : data}</p>
-        //       {/*<Button color="primary">Hello World</Button>*/}
-        //   </header>
-        // </div>
-        // <HomePage></HomePage>
-        // <SignIn></SignIn>
         <SnackbarProvider maxStack="2">
             <NotiStackWrapper/>
         </SnackbarProvider>
