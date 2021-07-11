@@ -22,7 +22,9 @@ function NotiStackWrapper() {
                 <HomePage></HomePage>
             </Route>
             <Route path="/profile">
-                <UserProfile></UserProfile>
+                <UserProfile
+                    showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant, autoHideDuration: 2000})}}
+                ></UserProfile>
             </Route>
         </Router>
     );

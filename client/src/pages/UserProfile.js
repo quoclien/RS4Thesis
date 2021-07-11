@@ -5,6 +5,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 import {Container} from "@material-ui/core";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import ProductLineKeys from "../models/ProductLineKeys";
 
 function handleOpenHomePage(){
     history.push("/home");
@@ -47,23 +50,44 @@ const reviewedProducts = [
     }
 ];
 
-const productLines = [1,2,3,4,5]
-
 export default function UserProfile(props){
+    const [data, setData] = useState([]);
+
+    const url = "http://127.0.0.1:5000/user/events";
+
+    const accessToken = localStorage.getItem("token");
+    const productLineKeys = new ProductLineKeys("_id","product_info.name", "event_type", "product_info.image_urls");
+    useEffect(() => {
+        axios.get(url, {
+            headers: {"Access-Control-Allow-Origin": "*",
+                "Authorization": "Bearer " + accessToken,
+            },
+            params: {
+                page: 0,
+                limit: 10
+            }
+        }).then(response => {
+            let event = response.data.data;
+            setData([event]);
+        }).catch(error => {
+            props.showSnackbar("You have no interactions so far.", "alert");
+        })
+    }, []);
     return(
-        <fragment>
+        <div>
             <Dashboard
                 leftButtonIcon={<HomeIcon/>}
                 rightButtonIcon={<ExitToApp/>}
                 handleLeftButtonClick={handleOpenHomePage}
                 handleRightButtonClick={handleSignOut}/>
             <Container>
-                <UserInfo></UserInfo>
+                <UserInfo userID={data["user_id"]}></UserInfo>
                 <ProductLine
-                    lineTitle={"You have reviewed those products: "}
-                    lineOfProducts={reviewedProducts}
+                    lineTitle={"Your interaction history: "}
+                    lineOfProducts={data}
+                    lineKeys={productLineKeys}
                 ></ProductLine>
             </Container>
-        </fragment>
+        </div>
     );
 }

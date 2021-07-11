@@ -24,16 +24,11 @@ export default function UserInfo(props){
     return(
         <div className={classes.flexParent}>
             <div className={classes.flexChild}>
-                <Avatar alt="Kelvin Nash" src={"../assets/images/reactlogo192.png"} className={classes.bigAvatar}></Avatar>
+                <Avatar alt="Guest" src={"../assets/images/reactlogo192.png"} className={classes.bigAvatar}></Avatar>
             </div>
             <div className={classes.flexChild}>
                 <Typography variant={"h6"} component={"p"}>
-                    Kelvin Nash
-                </Typography>
-            </div>
-            <div className={classes.flexChild}>
-                <Typography variant={"h7"} component={"p"}>
-                    25 Year Olds
+                    {props.userID}
                 </Typography>
             </div>
         </div>
