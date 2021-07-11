@@ -16,17 +16,18 @@ const useStyles = makeStyles((theme) => ({
 export default function ProductLine(props) {
     const classes = useStyles();
 
-    function generateLineOfProducts(products) {
+    function generateLineOfProducts(keys, products) {
         let data = [];
+        let imageString = true;
         for (let i = 0; i < products.length; i++) {
             data.push(
                 <Grid item key={i}>
                     <CustomizedCard
                         cardContent={<ProductCard
-                            imageSrc={products[i].url}
-                            key={products[i].id}
-                            name={products[i].name}
-                            price={products[i].price}
+                            imageUrl={products[i][keys.imageUrl]}
+                            key={products[i][keys.id]}
+                            title={products[i][keys.title]}
+                            subtitle={products[i][keys.subtitle]}
                         ></ProductCard>}
                         cardAction={""}
                     />
@@ -43,7 +44,7 @@ export default function ProductLine(props) {
                 {props.lineTitle}
             </Typography>
             <Grid container>
-                {generateLineOfProducts(props.lineOfProducts)}
+                {generateLineOfProducts(props.lineKeys ,props.lineOfProducts)}
             </Grid>
         </Paper>
     );
