@@ -8,8 +8,12 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: "10px",
-        width: "fit-content",
+        width: "auto",
+        overflow: "auto",
         padding: "5px",
+    },
+    container: {
+        width: "max-content",
     }
 }))
 
@@ -43,7 +47,7 @@ export default function ProductLine(props) {
                         className={{fontFamily: "Arial", fontWeight: "bold", fontSize: "30"}}>
                 {props.lineTitle}
             </Typography>
-            <Grid container>
+            <Grid container className={classes.container} gutter={24} justify='center'>
                 {generateLineOfProducts(props.lineKeys ,props.lineOfProducts)}
             </Grid>
         </Paper>
