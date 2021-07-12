@@ -32,7 +32,17 @@ export default function ProductDetail(props){
                 handleLeftButtonClick={handleOpenHomePage}
             ></Dashboard>
             <div className={classes.content}>
-                <ProductDetailCard/>
+                <ProductDetailCard
+                    brand={"Tesla"}
+                    title={"Self-driving car from Tesla"}
+                    subtitle={"Try it! You will love it!"}
+                    imageUrl={"https://cdn.tgdd.vn/Products/Images/7077/225949/mi-band-5-thum-600x600.jpg"}
+                    content={"Lorem Ipsum Sitamet COndositaea"}
+                    subcontent={"Marvel is a universe where we have the Hulk"}
+                    descriptionTitle={"How to drive a self-driving car"}
+                    description={"Just turn it on. Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on."}
+                    extra={"By Tesla. With money"}
+                />
             </div>
         </Container>
     );
