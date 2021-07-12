@@ -12,6 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import history from "../utils/History";
 import axios from "axios";
+import {SetAccessToken} from "../utils/LocalStorage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,7 @@ export default function SignIn(props) {
             else
             {
                 props.showSnackbar("Welcome back", "success");
-                localStorage.setItem("token", response.data.data);
+                SetAccessToken(response.data.data);
                 history.push("/home");
             }
         });
