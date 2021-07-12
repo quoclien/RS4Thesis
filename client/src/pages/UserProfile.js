@@ -69,7 +69,6 @@ export default function UserProfile(props){
             }
         }).then(response => {
             let event = response.data.data;
-            console.log(event);
             setData([event]);
         }).catch(error => {
             props.showSnackbar("You have no interactions so far.", "alert");

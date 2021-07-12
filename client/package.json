@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "clsx": "^1.1.1",
     "notistack": "^1.0.9"
   }
 }

@@ -6,6 +6,7 @@ import {Route, Router} from "react-router-dom";
 import history from "./utils/History";
 import UserProfile from "./pages/UserProfile";
 import {SnackbarProvider, useSnackbar} from 'notistack';
+import ProductDetail from "./pages/ProductDetail";
 
 
 function NotiStackWrapper() {
@@ -33,9 +34,10 @@ function NotiStackWrapper() {
 function App() {
 
     return (
-        <SnackbarProvider maxStack="2">
-            <NotiStackWrapper/>
-        </SnackbarProvider>
+        // <SnackbarProvider maxStack="2">
+        //     <NotiStackWrapper/>
+        // </SnackbarProvider>
+        <ProductDetail/>
     );
 }
 
