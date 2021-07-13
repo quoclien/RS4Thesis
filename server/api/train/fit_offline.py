@@ -7,8 +7,7 @@ from pathlib import Path
 from mongo import db
 from api.product import product_controller
 
-MODELS = ['ubr', 'iir', 'ctf', 'mf', 'ucf']
-
+MODELS = ['ubr', 'iir', 'ctf', 'mf', 'ucf', 'ctp']
 
 def fit_ctf(raw_data):
     # Initiate and train model
@@ -82,6 +81,17 @@ def fit_ucf(raw_data, method='pearson'):
     # Compress model
     os.system(f'gzip -kf {str(p)}')
 
+def fit_ctp(raw_data):
+    ctp_rec = CTPRecommend()
+    item_data = ctp_rec.prepare_trainset(raw_data)
+    ctp_rec.fit(item_data)
+
+    # Save trained model
+    p = Path(__file__).parent / 'ctp_rec/ctp_rec.joblib'
+    joblib.dump(ctp_rec, p)
+
+    # Compress model
+    os.system(f'gzip -kf {str(p)}')
 
 if __name__ == '__main__':
     load_dotenv(verbose=True)
@@ -93,6 +103,7 @@ if __name__ == '__main__':
     from api.train.mf_rec.utils import prepare_trainser
     from api.train.ucf_rec.model import UCFRecommender
     from api.train.ucf_rec.trainset import prepare_trainset
+    from api.train.ctp_rec.model import CTPRecommend
 
     parser = argparse.ArgumentParser(description='Train/Fit rs model')
     parser.add_argument('model', metavar='model', type=str, choices=MODELS,
@@ -122,3 +133,15 @@ if __name__ == '__main__':
         raw_data = reviews_collection.find(
             {}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
         fit_ubr(raw_data)
+    elif model == 'ctp':
+        product_collection = db.product
+        raw_data = product_collection.find({},{
+            'product_group': 1,
+            'product_category': 1,
+            'product_type': 1,
+            # 'unit_of_measure': 1,
+            # 'tax_exempt_yn': 1,
+            # 'promo_yn': 1,
+            'new_product_yn': 1,
+        })
+        fit_ctp(raw_data)
