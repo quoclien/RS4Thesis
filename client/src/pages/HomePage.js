@@ -7,6 +7,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 import ProductLineKeys from "../models/ProductLineKeys";
+import {GetAccessToken} from "../utils/LocalStorage";
 const axios = require('axios').default;
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,11 @@ function HomePage() {
     }
 
     useEffect(() => {
+        if (GetAccessToken() === "")
+        {
+            history.push("/");
+            return;
+        }
         axios.get(firstUrl, {
                 headers: {"Access-Control-Allow-Origin": "*",
                 },

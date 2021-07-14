@@ -2,11 +2,12 @@ import {Container} from "@material-ui/core";
 import Dashboard from "../components/Dashboard";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import {ExitToApp} from "@material-ui/icons";
-import React from "react";
+import React, {useEffect} from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
+import {GetAccessToken, GetViewingProduct} from "../utils/LocalStorage";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -14,8 +15,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function ProductDetail(props){
+export default function ProductDetail(){
     const classes = useStyles();
+    let product;
+    useEffect(() => {
+        if (GetAccessToken() === "")
+        {
+            history.push("/");
+            return;
+        }
+        product = JSON.parse(GetViewingProduct());
+    },[])
     function handleOpenHomePage(){
         history.push("/home");
     }

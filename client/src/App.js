@@ -27,6 +27,9 @@ function NotiStackWrapper() {
                     showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant, autoHideDuration: 2000})}}
                 ></UserProfile>
             </Route>
+            <Route path="/detail">
+                <ProductDetail></ProductDetail>
+            </Route>
         </Router>
     );
 }
@@ -34,10 +37,9 @@ function NotiStackWrapper() {
 function App() {
 
     return (
-        // <SnackbarProvider maxStack="2">
-        //     <NotiStackWrapper/>
-        // </SnackbarProvider>
-        <ProductDetail/>
+        <SnackbarProvider maxStack="2">
+            <NotiStackWrapper/>
+        </SnackbarProvider>
     );
 }
 

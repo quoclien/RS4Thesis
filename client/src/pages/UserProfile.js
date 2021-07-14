@@ -59,6 +59,11 @@ export default function UserProfile(props){
     const accessToken = GetAccessToken();
     const productLineKeys = new ProductLineKeys("_id","product_info.name", "event_type", "product_info.image_urls");
     useEffect(() => {
+        if (GetAccessToken() === "")
+        {
+            history.push("/");
+            return;
+        }
         axios.get(url, {
             headers: {"Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer " + accessToken,

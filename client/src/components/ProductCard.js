@@ -1,12 +1,13 @@
 import React from "react"
-import {Card, Typography} from "@material-ui/core";
+import {Card, CardActionArea, Typography} from "@material-ui/core";
 import altImg from "../assets/images/reactlogo192.png";
 import {makeStyles} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "200px", height: "320px"
+        width: "200px", height: "320px",
+        cursor: "pointer"
     },
     image: {
         height: "220px",
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ProductCard(props) {
     const classes = useStyles();
     return (
-        <Card raised={true} className={classes.root}>
+        <Card raised={true} className={classes.root} onClick={props.handleCardClick}>
             <img src={props.imageUrl} alt={altImg} className={classes.image}/>
             <Typography variant={"h5"} component={"h1"} color={"black"} align={"center"} className={classes.title}>
                 {
