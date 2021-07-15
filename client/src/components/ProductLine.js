@@ -97,12 +97,14 @@ export default function ProductLine(props) {
                 data.push(
                     <CustomizedCard
                         cardContent={<ProductCard
-                            imageUrl={_imageUrl}
-                            key={_key}
-                            title={_title}
-                            subtitle={_subtitle}
-                            handleCardClick={() => {handleCardClick(products[i])}}
-                        ></ProductCard>}
+                        imageUrl={_imageUrl}
+                        key={_key}
+                        title={_title}
+                        subtitle={_subtitle}
+                        handleCardClick={() => {
+                            handleCardClick(products[i])
+                        }}
+                        />}
                         cardAction={""}
                     />
                 );
@@ -112,7 +114,7 @@ export default function ProductLine(props) {
 
     }
     return (
-        <Paper className={classes.root}>
+        <div className={classes.root}>
             <Typography component="h2" variant="h5" color="primary" gutterBottom
                         className={classes.title}>
                 {props.lineTitle}
@@ -138,6 +140,6 @@ export default function ProductLine(props) {
             >
                 {generateLineOfProducts(props.lineKeys ,props.lineOfProducts)}
             </Carousel>
-        </Paper>
+        </div>
     );
 }

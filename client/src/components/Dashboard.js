@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
         textAlign: 'center',
+        fontSize: "18px",
+        fontWeight: 400,
+        lineHeight: "17px"
     },
     drawerPaper: {
         position: 'relative',

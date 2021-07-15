@@ -5,6 +5,9 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles({
     root: {
 
+    },
+    content: {
+        padding: "0 !important",
     }
 })
 
@@ -14,7 +17,7 @@ export default function CustomizedCard(props) {
     const classes = useStyles();
     function onMouseOver()
     {
-        setElevation(2);
+        setElevation(5);
         setRaised(true);
     }
     function onMouseOut() {
@@ -23,7 +26,7 @@ export default function CustomizedCard(props) {
     }
     return (
         <Card className={classes.root} elevation={elevation} onMouseOver={onMouseOver} onMouseOut={onMouseOut} raised={raised}>
-            <CardContent>
+            <CardContent className={classes.content}>
                 {props.cardContent}
             </CardContent>
             <CardActions>
