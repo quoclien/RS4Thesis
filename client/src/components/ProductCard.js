@@ -6,23 +6,32 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "200px", height: "320px",
-        cursor: "pointer"
+        cursor: "pointer",
+        textAlign: "center",
+        padding: "0 !important",
     },
     image: {
-        height: "220px",
-        width: "200px"
+        height: "240px",
+        width: "240px",
     },
     title: {
         overflow: "hidden",
         textOverflow: "ellipsis",
         display: "-webkit-box",
-        "-webkit-line-clamp": 2,
-        "-webkit-box-orient": "vertical"
+        "-webkit-line-clamp": 1,
+        "-webkit-box-orient": "vertical",
+        fontSize: "15px",
+        lineHeight: "20px",
+        fontWeight: 400,
+        color: "#242424"
     },
     subtitle: {
         overflow: "hidden",
         textOverflow: "ellipsis",
+        fontSize: "17px",
+        lineHeight: "24px",
+        fontWeight: 500,
+        color: "#242424"
     }
 }))
 export default function ProductCard(props) {

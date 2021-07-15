@@ -17,13 +17,21 @@ const useStyles = makeStyles((theme) => ({
         overflow: "auto",
         padding: "5px",
     },
-    container: {
-        width: "max-content",
+    title: {
+        fontWeight: "400",
+        fontSize: "20px",
+        lineHeight: "21px",
     },
-    carouselContainer:{
-       width: "100%",
-       height: "100%"
-}
+    container: {
+        width: "100%",
+        height: "100%",
+        // padding: "0 !important",
+        // margin: "0 !important"
+    },
+    item: {
+        width: "280px !important",
+        maxHeight: "368.8px !important"
+    }
 }))
 
 export default function ProductLine(props) {
@@ -106,7 +114,7 @@ export default function ProductLine(props) {
     return (
         <Paper className={classes.root}>
             <Typography component="h2" variant="h5" color="primary" gutterBottom
-                        className={{fontFamily: "Arial", fontWeight: "bold", fontSize: "30"}}>
+                        className={classes.title}>
                 {props.lineTitle}
             </Typography>
             <Carousel
@@ -116,16 +124,17 @@ export default function ProductLine(props) {
                 autoPlaySpeed={3000}
                 centerMode={true}
                 className={""}
-                containerClass={""}
+                containerClass={classes.container}
                 dotListClass=""
                 draggable
                 focusOnSelect={false}
                 infinite={true}
-                itemClass=""
+                itemClass={classes.item}
                 keyBoardControl
                 minimumTouchDrag={80}
                 renderButtonGroupOutside={false}
                 renderDotsOutside={false}
+                slidesToSlide={2}
             >
                 {generateLineOfProducts(props.lineKeys ,props.lineOfProducts)}
             </Carousel>
