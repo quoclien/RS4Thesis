@@ -8,6 +8,7 @@ import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 import ProductLineKeys from "../models/ProductLineKeys";
 import {GetAccessToken} from "../utils/LocalStorage";
+import InfiniteProductCardList from "../components/InfiniteProductCardList";
 const axios = require('axios').default;
 
 const useStyles = makeStyles((theme) => ({
@@ -41,24 +42,9 @@ function HomePage() {
             handleRightButtonClick={handleSignOut}
             handleLeftButtonClick={handleOpenProfile}
         ></Dashboard>
-        {/*<Grid container className={classes.content}>*/}
-        {/*    <Grid item xs={12}>*/}
-        {/*        <ProductLine*/}
-        {/*            lineTitle={"You should try"}*/}
-        {/*            lineOfProducts={firstLine}*/}
-        {/*            lineKeys={firstLineKeys}*/}
-        {/*        >*/}
-        {/*        </ProductLine>*/}
-        {/*    </Grid>*/}
-        {/*    <Grid item xs={12}>*/}
-        {/*        <ProductLine*/}
-        {/*            lineTitle={"Others also try"}*/}
-        {/*            lineOfProducts={secondLine}*/}
-        {/*            lineKeys={secondLineKeys}*/}
-        {/*        >*/}
-        {/*        </ProductLine>*/}
-        {/*    </Grid>*/}
-        {/*</Grid>*/}
+        <div className={classes.content}>
+            <InfiniteProductCardList/>
+        </div>
     </Container>;
 }
 
