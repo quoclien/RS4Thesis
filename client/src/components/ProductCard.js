@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center"
     },
     image: {
-        height: "240px",
-        width: "240px",
+        height: "250px",
+        width: "auto",
     },
     title: {
         overflow: "hidden",
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "15px",
         lineHeight: "20px",
         fontWeight: 400,
-        color: "#242424"
+        color: "#242424",
+        padding: "2px 1px 2px 1px"
     },
     subtitle: {
         overflow: "hidden",
@@ -37,16 +38,18 @@ export default function ProductCard(props) {
     const classes = useStyles();
     return (
         <div className={classes.root} onClick={props.handleCardClick}>
-            <img src={props.imageUrl} alt={altImg} className={classes.image}/>
+            <img src={"https://images-na.ssl-images-amazon.com/images/I/41fby%2BUjOJL.jpg"} alt={altImg} className={classes.image}/>
             <Typography variant={"h5"} component={"h1"} color={"black"} align={"center"} className={classes.title}>
-                {
-                    props.title
-                }
+                {/*{*/}
+                {/*    props.title*/}
+                {/*}*/}
+                Amazon.com $50 Gift Cards, Pack of 50 (Old Version) (Classic White Card Design)
             </Typography>
             <Typography variant={"h6"} component={"h2"} color={"black"} align={"center"}>
-                {
-                    props.subtitle
-                }
+                {/*{*/}
+                {/*    props.subtitle*/}
+                {/*}*/}
+                $1,250.00
             </Typography>
         </div>
     );
