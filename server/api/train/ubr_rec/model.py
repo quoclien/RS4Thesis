@@ -3,10 +3,9 @@ from scipy import sparse
 from sklearn.metrics.pairwise import cosine_similarity
 from api.train.ubr_rec.utils import get_similarity_products, standardize
 
-
 class UBRRecommender:
-    def __init__(self, options):
-        self.__use_cols = options['__use_cols']
+    def __init__(self):
+        self.__use_cols = ['movie_id', 'user_id', 'rating']
         self.__sim_mat = None
         self.__fitted = False
 
@@ -40,16 +39,17 @@ class UBRRecommender:
     def get_similarity_products(self, product_id, user_rating):
         similarity_score = self.__sim_mat[product_id]*user_rating
         similarity_score = similarity_score.sort_values(ascending=False)
-        self.__fitted = True
         return similarity_score
 
-    def recommend(user_action, n_items=10):
+    def recommend(user_action, limit=10):
+        print(user_action)
         pids = []
-
         similar_products = pd.DataFrame()
-        for item_id, user_rating in user_action:
-            similar_products = similar_products.append(
-                get_similarity_products(item_id, user_rating), ignore_index=True)
+        for action in user_action:
+            print(action)
+        #     similar_products = similar_products.append(
+        #         get_similarity_products(item_id, user_rating), ignore_index=True)
 
-        similar_products.sum().sort_values(ascending=False)
-        print(similar_products.head())
+        # df = similar_products.sum().sort_values(ascending=False).head(limit)
+        # print(similar_products)
+        return pids

@@ -23,7 +23,7 @@ def authenticate(done):
                 return unauth_response, 401
             uid = decoded['payload']['username']
             user = app.db['user'].find_one(
-                {'username': uid}, projection=['name', 'avatar', 'username'])
+                {'username': uid}, projection=['name', 'avatar', 'username', '_id'])
             if user:
                 req.user = user
                 # return done(uid, *args, **kwargs)
