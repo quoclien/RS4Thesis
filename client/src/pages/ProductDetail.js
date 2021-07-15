@@ -40,7 +40,7 @@ export default function ProductDetail(){
                 rightButtonIcon={<ExitToApp/>}
                 handleRightButtonClick={handleSignOut}
                 handleLeftButtonClick={handleOpenHomePage}
-            ></Dashboard>
+            />
             <div className={classes.content}>
                 <ProductDetailCard
                     brand={"Tesla"}

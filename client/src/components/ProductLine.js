@@ -7,7 +7,6 @@ import history from "../utils/History";
 import {SetViewingProduct} from "../utils/LocalStorage";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Test from "../pages/Test";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
         height: "100%",
-        // padding: "0 !important",
-        // margin: "0 !important"
     },
     item: {
         width: "280px !important",
