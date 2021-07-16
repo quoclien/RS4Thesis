@@ -41,7 +41,7 @@ function HomePage() {
             rightButtonIcon={<ExitToApp/>}
             handleRightButtonClick={handleSignOut}
             handleLeftButtonClick={handleOpenProfile}
-        ></Dashboard>
+        />
         <div className={classes.content}>
             <InfiniteProductCardList/>
         </div>

@@ -37,7 +37,7 @@ export default class InfiniteProductCardList extends Component {
         this.setState({ loading: true });
         axios
             .get(
-                `https://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=12`
+                "http://127.0.0.1:5000/products?page=${page}"
             )
             .then(res => {
                 this.setState({ photos: [...this.state.photos, ...res.data] });
@@ -48,8 +48,7 @@ export default class InfiniteProductCardList extends Component {
     handleObserver(entities, observer) {
         const y = entities[0].boundingClientRect.y;
         if (this.state.prevY > y) {
-            const lastPhoto = this.state.photos[this.state.photos.length - 1];
-            const curPage = lastPhoto.albumId;
+            const curPage = this.state.page + 1;
             this.getPhotos(curPage);
             this.setState({ page: curPage });
         }
@@ -77,13 +76,13 @@ export default class InfiniteProductCardList extends Component {
             <div className="container">
                 <Grid container style={{ minHeight: "800px" }}>
                     {this.state.photos.map(item => (
-                        <Grid item xs={3} key={item.id}>
+                        <Grid item xs={3} key={item._id}>
                             <CustomizedCard
                                 cardContent={<ProductCard
-                                    imageUrl={item.url}
-                                    key={item.id}
-                                    title={item.title}
-                                    subtitle={item.albumId}
+                                    imageUrl={item["image_urls"]}
+                                    key={item._id}
+                                    title={item.name}
+                                    subtitle={item.price}
                                     handleCardClick={() => {
                                         this.handleCardClick(item)
                                     }}

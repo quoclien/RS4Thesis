@@ -16,19 +16,23 @@ function NotiStackWrapper() {
         <Router history={history}>
             <Route exact path="/">
                 <SignIn
-                    showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant, autoHideDuration: 2000})}}
-                ></SignIn>
+                    showSnackbar={(mess, variant) => {
+                        enqueueSnackbar(mess, {variant, autoHideDuration: 2000})
+                    }}
+                />
             </Route>
             <Route path="/home">
-                <HomePage></HomePage>
+                <HomePage/>
             </Route>
             <Route path="/profile">
                 <UserProfile
-                    showSnackbar={(mess, variant) => {enqueueSnackbar(mess, {variant, autoHideDuration: 2000})}}
-                ></UserProfile>
+                    showSnackbar={(mess, variant) => {
+                        enqueueSnackbar(mess, {variant, autoHideDuration: 2000})
+                    }}
+                />
             </Route>
             <Route path="/detail">
-                <ProductDetail></ProductDetail>
+                <ProductDetail/>
             </Route>
         </Router>
     );
