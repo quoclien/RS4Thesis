@@ -5,3 +5,5 @@ node_modules/
 *.joblib
 
 *.joblib.gz
+
+__pycache__/

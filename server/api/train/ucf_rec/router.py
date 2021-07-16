@@ -5,7 +5,6 @@ from flask import request as req
 from utils import to_dict, to_objectid
 from mongo import db
 from api.train.ucf_rec.model import UCFRecommender
-from api.product import product_controller
 
 ucf_rec_blueprint = Blueprint('ucf_rec', __name__)
 ucf_rec_path = Path(__file__).parent / 'ucf_rec.joblib'
@@ -20,6 +19,7 @@ def recommend(uid):
     limit = req.args.get('limit', 10, type=int)
 
     pids = ucf_rec.recommend(uid, offset=offset, limit=limit)
+    print(pids)
     cursor = db.products.find({'_id': {'$in': pids}})
     products = [to_dict(doc) for doc in cursor]
     return {'data': products}

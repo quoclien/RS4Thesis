@@ -7,14 +7,13 @@ from pathlib import Path
 from mongo import db
 from api.product import product_controller
 
-MODELS = ['ubr', 'iir', 'ctf', 'mf', 'ucf']
-
+MODELS = ['ubr', 'iir', 'ctf', 'mf', 'ucf', 'ctp', 'pf']
 
 def fit_ctf(raw_data):
     # Initiate and train model
     ctf_text_rec = CTFTextRecommender(options={
         '__language': 'english',
-        '__use_cols': ['product', 'product_description']
+        '__use_cols': ['name', 'category_code']
     })
     data_items = ctf_text_rec.prepare_trainset(raw_data)
     ctf_text_rec.fit(data_items)
@@ -41,9 +40,7 @@ def fit_iir(raw_data):
 
 
 def fit_ubr(raw_data):
-    urb_rec = UBRRecommender(options={
-        '__use_cols': ['app_id', 'author', 'rating']
-    })
+    urb_rec = UBRRecommender()
     clean_data = urb_rec.prepare_trainset(raw_data)
     urb_rec.fit(clean_data)
 
@@ -83,6 +80,31 @@ def fit_ucf(raw_data, method='pearson'):
     os.system(f'gzip -kf {str(p)}')
 
 
+def fit_ctp(raw_data):
+    ctp_rec = CTPRecommend()
+    item_data = ctp_rec.prepare_trainset(raw_data)
+    ctp_rec.fit(item_data)
+
+    # Save trained model
+    p = Path(__file__).parent / 'ctp_rec/ctp_rec.joblib'
+    joblib.dump(ctp_rec, p)
+
+    # Compress model
+    os.system(f'gzip -kf {str(p)}')
+
+
+def fit_pf(products_data, raw_data):
+    pf_rec = PFRecommend()
+    profile_data = pf_rec.prepare_trainset(raw_data)
+    pf_rec.fit(products_data, profile_data)
+
+    # Save trained model
+    p = Path(__file__).parent / 'pf_rec/pf_rec.joblib'
+    joblib.dump(pf_rec, p)
+
+    # Compress model
+    os.system(f'gzip -kf {str(p)}')
+
 if __name__ == '__main__':
     load_dotenv(verbose=True)
     sys.path.append(str(Path(__file__).parent.parent))
@@ -93,6 +115,8 @@ if __name__ == '__main__':
     from api.train.mf_rec.utils import prepare_trainser
     from api.train.ucf_rec.model import UCFRecommender
     from api.train.ucf_rec.trainset import prepare_trainset
+    from api.train.ctp_rec.model import CTPRecommend
+    from api.train.pf_rec.model import PFRecommend
 
     parser = argparse.ArgumentParser(description='Train/Fit rs model')
     parser.add_argument('model', metavar='model', type=str, choices=MODELS,
@@ -102,9 +126,14 @@ if __name__ == '__main__':
     model = args.model
 
     if model == 'ctf':
-        raw_data = product_controller.find_product(
-            {}, {'_id': 1, 'product': 1, 'product_description': 1})
-        fit_ctf(raw_data)
+        # raw_data = product_controller.find_product(
+        #     {}, {'_id': 1, 'product': 1, 'product_description': 1})
+        products_collection = db.products
+        products_data = products_collection.find({}, {
+            'name': 1,
+            'category_code': 1,
+        })
+        fit_ctf(products_data)
     elif model == 'iir':
         reviews_collection = db.reviews
         raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
@@ -113,12 +142,40 @@ if __name__ == '__main__':
         events_collection = db.events
         raw_data = events_collection.find({})
         fit_ucf(raw_data)
-    elif model == 'mf':
-        reviews_collection = db.reviews
-        raw_data = reviews_collection.find({}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
-        fit_mf(raw_data)
+    # elif model == 'mf':
+    #     reviews_collection = db.reviews
+    #     raw_data = reviews_collection.find({}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
+    #     fit_mf(raw_data)
     elif model == 'ubr':
         reviews_collection = db.ratings
         raw_data = reviews_collection.find(
             {}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
         fit_ubr(raw_data)
+    elif model == 'ctp':
+        product_collection = db.product
+        raw_data = product_collection.find({},{
+            'product_group': 1,
+            'product_category': 1,
+            'product_type': 1,
+            # 'unit_of_measure': 1,
+            # 'tax_exempt_yn': 1,
+            # 'promo_yn': 1,
+            'new_product_yn': 1,
+        })
+        fit_ctp(raw_data)
+    elif model == 'pf':
+        event_collection = db.events
+        raw_data = event_collection.find({}, {
+            'brand': 1,
+            'event_type': 1,
+            'category_code': 1,
+            # 'dayofweek': 1,
+            # 'is_day': 1,
+            # 'uid': 1
+        })
+        products_collection = db.products
+        products_data = products_collection.find({}, {
+            'brand': 1,
+            'category_code': 1,
+        })
+        fit_pf(products_data, raw_data)

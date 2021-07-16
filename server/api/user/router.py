@@ -32,19 +32,16 @@ def login():
 @authenticate
 def getReviews():
     try:
-        user_id = request.user['_id']
+        user_id = request.user['username']
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
 
         events_colelection = db.events
-        cursor = events_colelection.find({'user_id': user_id}, {'user_session': 0}).skip(page*limit).limit(limit)
+        cursor = events_colelection.find({'uid': user_id}, {'user_session': 0}).skip(page*limit).limit(limit)
         products_collection = db.products
+        products = []
         for doc in cursor:
-            doc['product_info'] = products_collection.find_one({'_id': doc['product_id']})
-        # [ids.append(doc['product_id']) for doc in cursor]
-        # products_collection = db.products
-        # cursor = products_collection.find({'_id': {'$in': ids}})
-        # product = [to_dict(doc) for doc in cursor]
-        return {'data': doc}
+            products.append(products_collection.find_one({'_id': doc['product_id']}))
+        return {'data': products}
     except:
         return {'error': 'lấy thông tin thất bại'}
