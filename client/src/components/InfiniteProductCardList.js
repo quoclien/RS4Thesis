@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import CustomizedCard from "./CustomizedCard";
+import ProductCard from "./ProductCard";
+import {SetViewingProduct} from "../utils/LocalStorage";
+import history from "../utils/History";
+import {Grid} from "@material-ui/core";
 
 export default class InfiniteProductCardList extends Component {
     constructor() {
@@ -32,7 +37,7 @@ export default class InfiniteProductCardList extends Component {
         this.setState({ loading: true });
         axios
             .get(
-                `https://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=10`
+                `https://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=12`
             )
             .then(res => {
                 this.setState({ photos: [...this.state.photos, ...res.data] });
@@ -51,6 +56,12 @@ export default class InfiniteProductCardList extends Component {
         this.setState({ prevY: y });
     }
 
+    handleCardClick(product)
+    {
+        SetViewingProduct(JSON.stringify(product));
+        history.push("/detail");
+    }
+
     render() {
 
         // Additional css
@@ -64,11 +75,24 @@ export default class InfiniteProductCardList extends Component {
 
         return (
             <div className="container">
-                <div style={{ minHeight: "800px" }}>
-                    {this.state.photos.map(user => (
-                        <img src={user.url} height="100px" width="200px" />
+                <Grid container style={{ minHeight: "800px" }}>
+                    {this.state.photos.map(item => (
+                        <Grid item xs={3} key={item.id}>
+                            <CustomizedCard
+                                cardContent={<ProductCard
+                                    imageUrl={item.url}
+                                    key={item.id}
+                                    title={item.title}
+                                    subtitle={item.albumId}
+                                    handleCardClick={() => {
+                                        this.handleCardClick(item)
+                                    }}
+                                />}
+                                cardAction={""}
+                            />
+                        </Grid>
                     ))}
-                </div>
+                </Grid>
                 <div
                     ref={loadingRef => (this.loadingRef = loadingRef)}
                     style={loadingCSS}

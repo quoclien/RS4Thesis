@@ -38,12 +38,12 @@ export default function ProductCard(props) {
     const classes = useStyles();
     return (
         <div className={classes.root} onClick={props.handleCardClick}>
-            <img src={"https://images-na.ssl-images-amazon.com/images/I/41fby%2BUjOJL.jpg"} alt={altImg} className={classes.image}/>
+            <img src={props.imageUrl ? props.imageUrl :"https://images-na.ssl-images-amazon.com/images/I/41fby%2BUjOJL.jpg"} alt={altImg} className={classes.image}/>
             <Typography variant={"h5"} component={"h1"} color={"black"} align={"center"} className={classes.title}>
                 {/*{*/}
                 {/*    props.title*/}
                 {/*}*/}
-                Amazon.com $50 Gift Cards, Pack of 50 (Old Version) (Classic White Card Design)
+                {props.title ? props.title : "Amazon.com $50 Gift Cards, Pack of 50 (Old Version) (Classic White Card Design)"}
             </Typography>
             <Typography variant={"h6"} component={"h2"} color={"black"} align={"center"}>
                 {/*{*/}
