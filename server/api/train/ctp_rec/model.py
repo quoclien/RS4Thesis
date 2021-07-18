@@ -9,6 +9,7 @@ class CTPRecommend:
     print('Begin prepare data CTP recommend')
     df = pd.DataFrame(raw_data)
     df = df.dropna()
+    df = df.drop(columns='_id')
     print('End prepare data CTP recommend')
     return df
 
@@ -24,7 +25,7 @@ class CTPRecommend:
       raw_data[col] = col + raw_data[col]
 
       pivot_table = pd.pivot_table(raw_data, 
-        index=['_id'], 
+        index=['product_id'], 
         columns=[col],
         values= col_score
       )
@@ -32,6 +33,7 @@ class CTPRecommend:
 
     pivot_df = pd.concat(merge_dfs, axis=1)
     pivot_df = pivot_df.fillna(0)
+    print(pivot_df)
     print('End train prepare data CTP recommend')
     self.__mat = pivot_df
 
