@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import history from "../utils/History";
 import axios from "axios";
-import {GetAccessToken, SetAccessToken} from "../utils/LocalStorage";
+import {ClearStorage, GetAccessToken, SetAccessToken} from "../utils/LocalStorage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +59,10 @@ export default function SignIn(props) {
             }
         });
     }
+
+    useEffect(() => {
+        ClearStorage();
+    }, [])
     return (
         <React.Fragment>
             <Container component="main" maxWidth="xs">

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     media: {
-        height: "448px",
+        height: "100%",
         // paddingTop: '56.25%', // 16:9
         width: "auto"
     },
@@ -82,22 +82,13 @@ export default function ProductDetailCard(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
-    function generateImageList()
-    {
-        let data =[];
-        data.push(
-            <img src={props.imageUrl} alt={"image of product"} className={classes.media}/>
-        );
-        return data;
-    }
-
     return (
         <Card className={classes.root}>
             <Grid container>
-                <Grid item xs={6}>
-                    {generateImageList()}
+                <Grid item xs={12} md={4}>
+                    <img src={props.imageUrl} alt={"image of product"} className={classes.media}/>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={8}>
                     <Typography variant={"p"} component={"p"} className={classes.note}>
                         {"Brand: " + props.brand +" | Category: " + props.category}
                     </Typography>
@@ -114,27 +105,7 @@ export default function ProductDetailCard(props) {
                         <Typography variant={"p"} component={"p"} className={classes.description}>
                             {props.description}
                         </Typography>
-                        {/*<Typography variant={"p"} component={"p"} className={classes.description}>*/}
-                        {/*    Gift Card has no fees and no expiration date*/}
-                        {/*</Typography>*/}
-                        {/*<Typography variant={"p"} component={"p"} className={classes.description}>*/}
-                        {/*    No returns and no refunds on Gift Cards*/}
-                        {/*</Typography>*/}
                     </div>
-                    {/*<div style={{paddingTop: "10px"}}>*/}
-                    {/*    <Typography variant={"h5"} component={"h6"} className={""}>*/}
-                    {/*        Details:*/}
-                    {/*    </Typography>*/}
-                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
-                    {/*        <b>Shipping Weight:</b> 1.6 pounds*/}
-                    {/*    </Typography>*/}
-                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
-                    {/*        <b>Domestic Shipping:</b> Item can be shipped within U.S.*/}
-                    {/*    </Typography>*/}
-                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
-                    {/*        <b>International Shipping:</b> This item is not eligible for international shipping.*/}
-                    {/*    </Typography>*/}
-                    {/*</div>*/}
                 </Grid>
             </Grid>
         </Card>

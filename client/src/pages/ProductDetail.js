@@ -126,8 +126,8 @@ export default function ProductDetail(){
                     brand={product.brand}
                     title={product.name}
                     subtitle={product.price}
-                    imageUrl={product.image_urls}
-                    category={product.category_code}
+                    imageUrl={product.image}
+                    category={product.category}
                     description={product.description}
                 />
             </div>
