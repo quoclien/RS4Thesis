@@ -139,7 +139,7 @@ export default function ProductLine(props) {
                 dotListClass=""
                 draggable
                 focusOnSelect={false}
-                infinite={true}
+                infinite={false}
                 itemClass={classes.item}
                 keyBoardControl
                 minimumTouchDrag={80}

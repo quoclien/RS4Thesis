@@ -17,27 +17,27 @@ export default function UserProfile(props){
     const url = "http://127.0.0.1:5000/user/events";
 
     const accessToken = GetAccessToken();
-    const productLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
+    const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
         if (accessToken === "")
         {
             history.push("/");
             return;
         }
-        // axios.get(url, {
-        //     headers: {"Access-Control-Allow-Origin": "*",
-        //         "Authorization": "Bearer " + accessToken,
-        //     },
-        //     params: {
-        //         page: 0,
-        //         limit: 10
-        //     }
-        // }).then(response => {
-        //     let event = response.data.data;
-        //     setData([event]);
-        // }).catch(error => {
-        //     props.showSnackbar("You have no interactions so far.", "alert");
-        // });
+        axios.get(url, {
+            headers: {"Access-Control-Allow-Origin": "*",
+                "Authorization": "Bearer " + accessToken,
+            },
+            params: {
+                page: 0,
+                limit: 10
+            }
+        }).then(response => {
+            let events = response.data.data;
+            setData(events);
+        }).catch(error => {
+            props.showSnackbar("You have no interactions so far.", "alert");
+        });
     }, []);
 
     function handleOpenHomePage(){
@@ -57,8 +57,8 @@ export default function UserProfile(props){
             <Container>
                 <UserInfo userID={data["user_id"]}/>
                 <ProductLine
-                    lineTitle={"Your purchase history: "}
-                    lineOfProducts={mockDataEvent}
+                    lineTitle={"Products you have viewed: "}
+                    lineOfProducts={data}
                     lineKeys={productLineKeys}
                 />
             </Container>
