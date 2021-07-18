@@ -30,6 +30,7 @@ export default function ProductDetail(){
     const firstUrlPathVar = GetViewingProductId();
     const firstUrl = `http://127.0.0.1:5000/ctf_rec/${firstUrlPathVar}`;
     const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
+    const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
     const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
@@ -64,23 +65,6 @@ export default function ProductDetail(){
             {
                 url: secondUrl,
                 method: "GET",
-                // params: {
-                //   page: 0,
-                // },
-                // data: {
-                //     "origin": {
-                //         "value": "Hàn Quốc",
-                //         "score": 5
-                //     },
-                //     "category": {
-                //         "value": "Điện thoại",
-                //         "score": 2
-                //     }
-                // },
-                // headers: {
-                //     'Access-Control-Allow-Origin' : '*',
-                //     // 'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                // },
             }
         )
             .then(response => {
@@ -88,6 +72,34 @@ export default function ProductDetail(){
             console.log(productLine)
             setSecondLine(productLine);
         }).catch(e => {console.log(e)});
+
+        axios(
+            {
+                url: thirdUrl,
+                method: "POST",
+                params: {
+                    page: 0,
+                },
+                data: {
+                    "brand": {
+                        "value": "MOBELL",
+                        "score": 10
+                    },
+                    // "category": {
+                    //     "value": "Điện thoại",
+                    //     "score": 2
+                    // }
+                },
+                // headers: {
+                //     'Access-Control-Allow-Origin' : '*',
+                //     'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                // },
+            }
+        )
+            .then(response => {
+                let productLine = response;
+                console.log(productLine)
+            }).catch(e => {console.log(e)});
     },[])
     function handleOpenHomePage(){
         history.push("/home");

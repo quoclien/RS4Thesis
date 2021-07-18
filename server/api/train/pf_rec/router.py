@@ -16,7 +16,7 @@ if pf_rec_path.is_file():
 @pf_rec_blueprint.route('/', methods=['GET'])
 def recommend():
     try:
-        limit = req.args.get('limit', 10, type=int)
+        # limit = req.args.get('limit', 10, type=int)
 
         pids = pf_rec.recommend(limit=limit)
         cursor = db.products.find({'product_id': {'$in': pids}})

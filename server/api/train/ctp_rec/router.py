@@ -24,6 +24,7 @@ def recommend():
     body = request.get_json()
     ids = ctp_rec.recommend(body, limit)
   
+    print(ids)
     cursor = db.products.find({'product_id': {'$in': ids}})
     products = [to_dict(doc) for doc in cursor]
     # return response_to_client(status= HTTP_Status.SUCCESS, data= dumps(products))

@@ -64,8 +64,12 @@ export default function UserProfile(props){
         });
 
         axios.get(secondUrl, {
-            headers: {
-                "Authorization": "Bearer " + accessToken,
+            // headers: {
+            //     "Authorization": "Bearer " + accessToken
+            // },s
+            params: {
+                page: 0,
+                limit: 10
             }
         }).then(response => {
             let events = response.data.data;
