@@ -27,12 +27,12 @@ export default function ProductDetail(){
     const [product, setProduct] = useState(mockDataEvent[0]);
 
     const productDetailUrl = "http://127.0.0.1:5000/products";
-    const firstUrlPathVar = "60963da3b2a5dad152d974a1"
+    const firstUrlPathVar = GetViewingProductId();
     const firstUrl = `http://127.0.0.1:5000/ctf_rec/${firstUrlPathVar}`;
-    const secondUrl = "http://127.0.0.1:5000/ctp_rec";
+    const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
 
-    const firstLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
-    const secondLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
+    const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
+    const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
         if (GetAccessToken() === "")
         {
@@ -55,56 +55,39 @@ export default function ProductDetail(){
 
         // Get first recommender product line
         axios.get(firstUrl).then(response => {
-            let productLines = response.data.data;
-            setFirstLine(productLines);
+            let productLine = response.data.data;
+            setFirstLine(productLine);
         }).catch(e => {console.log(e)});
 
         // Get second recommender product line
-        // axios.get(secondUrl, {
-        //     headers: {"Access-Control-Allow-Origin": "*"},
-        //     params: {
-        //         page: 0,
-        //         limit: 11,
-        //         "product_group": {
-        //             "value": "Beverages",
-        //             "score": 5
-        //         },
-        //         "product_category": {
-        //             "value": "Tea",
-        //             "score": 1.5
-        //         }
-        //     }
-        // }).then();
-
-        // axios(
-        //     {
-        //         url: secondUrl,
-        //         method: "POST",
-        //         params: {
-        //           page: 0,
-        //           limit: 11,
-        //         },
-        //         data: {
-        //             product_group: {
-        //                 "value": "Beverages",
-        //                 "score": 5
-        //             },
-        //             product_category: {
-        //                 "value": "Tea",
-        //                 "score": 1.5
-        //             }
-        //         },
-        //         headers: {
-        //             'Access-Control-Allow-Origin' : '*',
-        //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        //         },
-        //     }
-        // )
-        //     .then(response => {
-        //     let productLines = response.data.data;
-        //     console.log(productLines)
-        //     setSecondLine(productLines);
-        // }).catch(e => {console.log("error on product line 2 ", e)});
+        axios(
+            {
+                url: secondUrl,
+                method: "GET",
+                // params: {
+                //   page: 0,
+                // },
+                // data: {
+                //     "origin": {
+                //         "value": "Hàn Quốc",
+                //         "score": 5
+                //     },
+                //     "category": {
+                //         "value": "Điện thoại",
+                //         "score": 2
+                //     }
+                // },
+                // headers: {
+                //     'Access-Control-Allow-Origin' : '*',
+                //     // 'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                // },
+            }
+        )
+            .then(response => {
+            let productLine = response.data.data;
+            console.log(productLine)
+            setSecondLine(productLine);
+        }).catch(e => {console.log(e)});
     },[])
     function handleOpenHomePage(){
         history.push("/home");
@@ -135,7 +118,7 @@ export default function ProductDetail(){
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"You should try"}
-                        lineOfProducts={mockDataCtf}
+                        lineOfProducts={firstLine}
                         lineKeys={firstLineKeys}
                     >
                     </ProductLine>
@@ -143,7 +126,7 @@ export default function ProductDetail(){
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"Others also try"}
-                        lineOfProducts={mockDataPC}
+                        lineOfProducts={secondLine}
                         lineKeys={secondLineKeys}
                     >
                     </ProductLine>

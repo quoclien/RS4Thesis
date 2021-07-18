@@ -85,10 +85,10 @@ export default function ProductDetailCard(props) {
     return (
         <Card className={classes.root}>
             <Grid container>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={5}>
                     <img src={props.imageUrl} alt={"image of product"} className={classes.media}/>
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={7}>
                     <Typography variant={"p"} component={"p"} className={classes.note}>
                         {"Brand: " + props.brand +" | Category: " + props.category}
                     </Typography>

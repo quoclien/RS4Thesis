@@ -59,10 +59,17 @@ export default function ProductLine(props) {
         }
     };
 
-    function handleCardClick(product)
+    function handleCardClick(id)
     {
-        SetViewingProductId(JSON.stringify(product));
-        history.push("/detail");
+        SetViewingProductId(id);
+        if (history.location.pathname === "/detail")
+        {
+            history.go(0);
+        }
+        else
+        {
+            history.push("/detail");
+        }
     }
 
     function generateLineOfProducts(keys, products) {
@@ -77,10 +84,6 @@ export default function ProductLine(props) {
                 {
                     imageUrlArray = keys.imageUrl.split(".");
                 }
-                // else
-                // {
-                //     imageUrlArray.push(imageUrls[Math.floor(Math.random() * imageUrls.length)])
-                // }
                 let keyArray = keys.id.split(".");
                 let titleArray = keys.title.split(".");
                 let subtitleArray = keys.subtitle.split(".");
@@ -108,7 +111,7 @@ export default function ProductLine(props) {
                         title={_title}
                         subtitle={_subtitle}
                         handleCardClick={() => {
-                            handleCardClick(products[i])
+                            handleCardClick(_key)
                         }}
                         />}
                         cardAction={""}
