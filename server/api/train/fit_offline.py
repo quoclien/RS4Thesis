@@ -39,16 +39,16 @@ def fit_iir(raw_data):
     os.system(f'gzip -kf {str(p)}')
 
 
-def fit_ubr(raw_data):
-    urb_rec = UBRRecommender()
-    clean_data = urb_rec.prepare_trainset(raw_data)
-    urb_rec.fit(clean_data)
+# def fit_ubr(raw_data):
+#     urb_rec = UBRRecommender()
+#     clean_data = urb_rec.prepare_trainset(raw_data)
+#     urb_rec.fit(clean_data)
 
-    # Save trained model
-    p = Path(__file__).parent / 'ubr_rec/ubr_rec.joblib'
-    joblib.dump(urb_rec, p)
-    # Compress model
-    os.system(f'gzip -kf {str(p)}')
+#     # Save trained model
+#     p = Path(__file__).parent / 'ubr_rec/ubr_rec.joblib'
+#     joblib.dump(urb_rec, p)
+#     # Compress model
+#     os.system(f'gzip -kf {str(p)}')
 
 
 def fit_mf(raw_data):

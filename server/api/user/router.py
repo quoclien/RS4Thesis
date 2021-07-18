@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from flask.globals import request
 from mongo import db
 from bson.json_util import loads, dumps
@@ -25,7 +25,11 @@ def login():
         # json_str = dumps(user)
         token = encode_jwt({'id': str(user['_id']), 'user_id': user['user_id']})
         print(token)
-        return {'data': token}
+        data = {
+            "token": token, "user_id": user['user_id']
+        }
+        print(data)
+        return {'data': data}
     except:
         return {'error': 'tài khoản hoặc mật khẩu không đúng'}
 
@@ -45,5 +49,14 @@ def getReviews():
         for doc in cursor:
             products.append(products_collection.find_one({'product_id': doc['product_id']}))
         return {'data': [to_dict(doc) for doc in products]}
+    except:
+        return {'error': 'lấy thông tin thất bại'}
+
+@user_blueprint.route('/<string:user_id>', methods=['GET'])
+def getInfo(user_id):
+    try:
+        users = db.users.find_one({'user_id': user_id})
+        del users['_id']
+        return {'data': users}
     except:
         return {'error': 'lấy thông tin thất bại'}
