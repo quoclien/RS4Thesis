@@ -4,10 +4,15 @@ import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
 import {makeStyles} from "@material-ui/core/styles";
 import history from "../utils/History";
-import {SetViewingProduct} from "../utils/LocalStorage";
+import {SetViewingProductId} from "../utils/LocalStorage";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+const imageUrls = [
+    "https://images-na.ssl-images-amazon.com/images/I/41y0NUBr8BL.jpg",
+    "https://images-na.ssl-images-amazon.com/images/I/31AOWcizYvL.jpg",
+    "https://images-na.ssl-images-amazon.com/images/I/317ZQtCvFzL.jpg"
+];
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,7 +61,7 @@ export default function ProductLine(props) {
 
     function handleCardClick(product)
     {
-        SetViewingProduct(JSON.stringify(product));
+        SetViewingProductId(JSON.stringify(product));
         history.push("/detail");
     }
 
@@ -67,17 +72,21 @@ export default function ProductLine(props) {
             for (let i = 0; i < products.length; i++) {
                 let _imageUrl, _key, _title, _subtitle;
                 _imageUrl = _key = _title = _subtitle  = products[i] ;
-                let imageUrlArray = keys.imageUrl.split(".");
+                let imageUrlArray = [];
+                if (keys.imageUrl !== "")
+                {
+                    imageUrlArray = keys.imageUrl.split(".");
+                }
+                // else
+                // {
+                //     imageUrlArray.push(imageUrls[Math.floor(Math.random() * imageUrls.length)])
+                // }
                 let keyArray = keys.id.split(".");
                 let titleArray = keys.title.split(".");
                 let subtitleArray = keys.subtitle.split(".");
                 for (let val of imageUrlArray)
                 {
                     _imageUrl = _imageUrl[val];
-                    if (val === "image_urls")
-                    {
-                        _imageUrl = JSON.parse(_imageUrl)[0];
-                    }
                 }
                 for (let val of keyArray)
                 {

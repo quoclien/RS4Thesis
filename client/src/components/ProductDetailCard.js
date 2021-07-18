@@ -18,12 +18,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {colors, Grid} from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 
-const imageUrls = [
-    "https://images-na.ssl-images-amazon.com/images/I/41y0NUBr8BL.jpg",
-    "https://images-na.ssl-images-amazon.com/images/I/31AOWcizYvL.jpg",
-    "https://images-na.ssl-images-amazon.com/images/I/317ZQtCvFzL.jpg"
-];
-
 const useStyles = makeStyles((theme) => ({
     root: {
         // maxWidth: 345,
@@ -91,108 +85,56 @@ export default function ProductDetailCard(props) {
     function generateImageList()
     {
         let data =[];
-        for(let url of imageUrls)
-        {
-            data.push(
-                <img src={url} alt={"image of product"} className={classes.media}/>
-            );
-        }
+        data.push(
+            <img src={props.imageUrl} alt={"image of product"} className={classes.media}/>
+        );
         return data;
     }
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     return (
         <Card className={classes.root}>
             <Grid container>
                 <Grid item xs={6}>
-                    <Carousel
-                        additionalTransfrom={0}
-                        arrows
-                        autoPlaySpeed={3000}
-                        centerMode={false}
-                        className=""
-                        containerClass={classes.carouselContainer}
-                        dotListClass=""
-                        draggable
-                        focusOnSelect={false}
-                        infinite
-                        itemClass=""
-                        keyBoardControl
-                        minimumTouchDrag={80}
-                        renderButtonGroupOutside={false}
-                        renderDotsOutside={false}
-                        responsive={{
-                            desktop: {
-                                breakpoint: {
-                                    max: 3000,
-                                    min: 1024
-                                },
-                                items: 1
-                            },
-                            mobile: {
-                                breakpoint: {
-                                    max: 464,
-                                    min: 0
-                                },
-                                items: 1
-                            },
-                            tablet: {
-                                breakpoint: {
-                                    max: 1024,
-                                    min: 464
-                                },
-                                items: 1
-                            }
-                        }}
-                        showDots
-                        sliderClass=""
-                        slidesToSlide={1}
-                        swipeable
-                    >
-                        {generateImageList()}
-                    </Carousel>
+                    {generateImageList()}
                 </Grid>
                 <Grid item xs={6}>
                     <Typography variant={"p"} component={"p"} className={classes.note}>
-                        Brand: Amazon | Category: Gift card
+                        {"Brand: " + props.brand +" | Category: " + props.category}
                     </Typography>
                     <Typography variant={"h1"} component={"h1"} className={classes.title}>
-                        Amazon.com $50 Gift Cards, Pack of 50 (Old Version) (Classic White Card Design)
+                        {props.title}
                     </Typography>
                     <Typography variant={"h2"} component={"h3"} className={classes.subtitle}>
-                        $1,250.00
+                        {props.subtitle}
                     </Typography>
                     <div style={{paddingTop: "10px"}}>
                         <Typography variant={"h5"} component={"h6"} className={""}>
-                            How to use:
+                            Description:
                         </Typography>
                         <Typography variant={"p"} component={"p"} className={classes.description}>
-                            Contains 50 Gift Cards
+                            {props.description}
                         </Typography>
-                        <Typography variant={"p"} component={"p"} className={classes.description}>
-                            Gift Card has no fees and no expiration date
-                        </Typography>
-                        <Typography variant={"p"} component={"p"} className={classes.description}>
-                            No returns and no refunds on Gift Cards
-                        </Typography>
+                        {/*<Typography variant={"p"} component={"p"} className={classes.description}>*/}
+                        {/*    Gift Card has no fees and no expiration date*/}
+                        {/*</Typography>*/}
+                        {/*<Typography variant={"p"} component={"p"} className={classes.description}>*/}
+                        {/*    No returns and no refunds on Gift Cards*/}
+                        {/*</Typography>*/}
                     </div>
-                    <div style={{paddingTop: "10px"}}>
-                        <Typography variant={"h5"} component={"h6"} className={""}>
-                            Details:
-                        </Typography>
-                        <Typography variant={"p"} component={"p"} className={classes.description}>
-                            <b>Shipping Weight:</b> 1.6 pounds
-                        </Typography>
-                        <Typography variant={"p"} component={"p"} className={classes.description}>
-                            <b>Domestic Shipping:</b> Item can be shipped within U.S.
-                        </Typography>
-                        <Typography variant={"p"} component={"p"} className={classes.description}>
-                            <b>International Shipping:</b> This item is not eligible for international shipping.
-                        </Typography>
-                    </div>
+                    {/*<div style={{paddingTop: "10px"}}>*/}
+                    {/*    <Typography variant={"h5"} component={"h6"} className={""}>*/}
+                    {/*        Details:*/}
+                    {/*    </Typography>*/}
+                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
+                    {/*        <b>Shipping Weight:</b> 1.6 pounds*/}
+                    {/*    </Typography>*/}
+                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
+                    {/*        <b>Domestic Shipping:</b> Item can be shipped within U.S.*/}
+                    {/*    </Typography>*/}
+                    {/*    <Typography variant={"p"} component={"p"} className={classes.description}>*/}
+                    {/*        <b>International Shipping:</b> This item is not eligible for international shipping.*/}
+                    {/*    </Typography>*/}
+                    {/*</div>*/}
                 </Grid>
             </Grid>
         </Card>

@@ -7,10 +7,11 @@ import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetAccessToken, GetViewingProduct} from "../utils/LocalStorage";
+import {GetAccessToken, GetViewingProduct, GetViewingProductId} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
+import {mockDataCtf, mockDataEvent, mockDataPC} from "../utils/MockData";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -20,40 +21,90 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductDetail(){
     const classes = useStyles();
-    let product;
+    let productId;
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
+    const [product, setProduct] = useState(mockDataEvent[0]);
 
-    const firstUrl = "http://127.0.0.1:5000/ucf_rec/60963da2b2a5dad152d960be";
-    const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
+    const productDetailUrl = "http://127.0.0.1:5000/products";
+    const firstUrlPathVar = "60963da3b2a5dad152d974a1"
+    const firstUrl = `http://127.0.0.1:5000/ctf_rec/${firstUrlPathVar}`;
+    const secondUrl = "http://127.0.0.1:5000/ctp_rec";
 
     const firstLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
-    const secondLineKeys = new ProductLineKeys("_id", "title", "rating", "icon");
+    const secondLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
     useEffect(() => {
         if (GetAccessToken() === "")
         {
             history.push("/");
             return;
         }
-        product = JSON.parse(GetViewingProduct());
-        axios.get(firstUrl, {
-            headers: {"Access-Control-Allow-Origin": "*",
-            },
+        // Get product for product detail card
+        productId = GetViewingProductId();
+        axios.get(productDetailUrl, {
             params: {
+                product_id: productId,
                 page: 0,
-                limit: 10
+                limit: 1
             }
         }).then(response => {
-            let productLines = response.data.data;
-            setFirstLine(productLines);
+            let product = response.data;
+            setProduct(product);
+        }).catch(e => {
         });
 
-        axios.get(secondUrl, {
-            headers: {"Access-Control-Allow-Origin": "*"},
-        }).then(response => {
+        // Get first recommender product line
+        axios.get(firstUrl).then(response => {
             let productLines = response.data.data;
-            setSecondLine(productLines);
-        });
+            setFirstLine(productLines);
+        }).catch(e => {console.log(e)});
+
+        // Get second recommender product line
+        // axios.get(secondUrl, {
+        //     headers: {"Access-Control-Allow-Origin": "*"},
+        //     params: {
+        //         page: 0,
+        //         limit: 11,
+        //         "product_group": {
+        //             "value": "Beverages",
+        //             "score": 5
+        //         },
+        //         "product_category": {
+        //             "value": "Tea",
+        //             "score": 1.5
+        //         }
+        //     }
+        // }).then();
+
+        // axios(
+        //     {
+        //         url: secondUrl,
+        //         method: "POST",
+        //         params: {
+        //           page: 0,
+        //           limit: 11,
+        //         },
+        //         data: {
+        //             product_group: {
+        //                 "value": "Beverages",
+        //                 "score": 5
+        //             },
+        //             product_category: {
+        //                 "value": "Tea",
+        //                 "score": 1.5
+        //             }
+        //         },
+        //         headers: {
+        //             'Access-Control-Allow-Origin' : '*',
+        //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        //         },
+        //     }
+        // )
+        //     .then(response => {
+        //     let productLines = response.data.data;
+        //     console.log(productLines)
+        //     setSecondLine(productLines);
+        // }).catch(e => {console.log("error on product line 2 ", e)});
     },[])
     function handleOpenHomePage(){
         history.push("/home");
@@ -72,22 +123,19 @@ export default function ProductDetail(){
             />
             <div className={classes.content}>
                 <ProductDetailCard
-                    brand={"Tesla"}
-                    title={"Self-driving car from Tesla"}
-                    subtitle={"Try it! You will love it!"}
-                    imageUrl={"https://cdn.tgdd.vn/Products/Images/7077/225949/mi-band-5-thum-600x600.jpg"}
-                    content={"Lorem Ipsum Sitamet COndositaea"}
-                    subcontent={"Marvel is a universe where we have the Hulk"}
-                    descriptionTitle={"How to drive a self-driving car"}
-                    description={"Just turn it on. Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on.Turn it on. Turn it on."}
-                    extra={"By Tesla. With money"}
+                    brand={product.brand}
+                    title={product.name}
+                    subtitle={product.price}
+                    imageUrl={product.image_urls}
+                    category={product.category_code}
+                    description={product.description}
                 />
             </div>
             <Grid container className={classes.content}>
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"You should try"}
-                        lineOfProducts={firstLine}
+                        lineOfProducts={mockDataCtf}
                         lineKeys={firstLineKeys}
                     >
                     </ProductLine>
@@ -95,7 +143,7 @@ export default function ProductDetail(){
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"Others also try"}
-                        lineOfProducts={secondLine}
+                        lineOfProducts={mockDataPC}
                         lineKeys={secondLineKeys}
                     >
                     </ProductLine>

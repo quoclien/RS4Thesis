@@ -9,14 +9,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import ProductLineKeys from "../models/ProductLineKeys";
 import {GetAccessToken} from "../utils/LocalStorage";
-
-function handleOpenHomePage(){
-    history.push("/home");
-}
-
-function handleSignOut(){
-    history.push("/");
-}
+import {mockDataEvent} from "../utils/MockData";
 
 export default function UserProfile(props){
     const [data, setData] = useState([]);
@@ -24,28 +17,36 @@ export default function UserProfile(props){
     const url = "http://127.0.0.1:5000/user/events";
 
     const accessToken = GetAccessToken();
-    const productLineKeys = new ProductLineKeys("_id","product_info.name", "event_type", "product_info.image_urls");
+    const productLineKeys = new ProductLineKeys("_id", "name", "price", "image_urls");
     useEffect(() => {
-        if (GetAccessToken() === "")
+        if (accessToken === "")
         {
             history.push("/");
             return;
         }
-        axios.get(url, {
-            headers: {"Access-Control-Allow-Origin": "*",
-                "Authorization": "Bearer " + accessToken,
-            },
-            params: {
-                page: 0,
-                limit: 10
-            }
-        }).then(response => {
-            let event = response.data.data;
-            setData([event]);
-        }).catch(error => {
-            props.showSnackbar("You have no interactions so far.", "alert");
-        })
+        // axios.get(url, {
+        //     headers: {"Access-Control-Allow-Origin": "*",
+        //         "Authorization": "Bearer " + accessToken,
+        //     },
+        //     params: {
+        //         page: 0,
+        //         limit: 10
+        //     }
+        // }).then(response => {
+        //     let event = response.data.data;
+        //     setData([event]);
+        // }).catch(error => {
+        //     props.showSnackbar("You have no interactions so far.", "alert");
+        // });
     }, []);
+
+    function handleOpenHomePage(){
+        history.push("/home");
+    }
+
+    function handleSignOut(){
+        history.push("/");
+    }
     return(
         <div>
             <Dashboard
@@ -56,8 +57,8 @@ export default function UserProfile(props){
             <Container>
                 <UserInfo userID={data["user_id"]}/>
                 <ProductLine
-                    lineTitle={"Your interaction history: "}
-                    lineOfProducts={data}
+                    lineTitle={"Your purchase history: "}
+                    lineOfProducts={mockDataEvent}
                     lineKeys={productLineKeys}
                 />
             </Container>

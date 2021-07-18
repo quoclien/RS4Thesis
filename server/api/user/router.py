@@ -35,13 +35,16 @@ def getReviews():
         user_id = request.user['username']
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
-
+        print(user_id)
         events_colelection = db.events
         cursor = events_colelection.find({'uid': user_id}, {'user_session': 0}).skip(page*limit).limit(limit)
         products_collection = db.products
         products = []
         for doc in cursor:
             products.append(products_collection.find_one({'_id': doc['product_id']}))
+        # return response_to_client(status= HTTP_Status.SUCCESS, data= products)
+        # print(products)
+        
         return {'data': products}
     except:
         return {'error': 'lấy thông tin thất bại'}
