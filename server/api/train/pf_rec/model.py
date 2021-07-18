@@ -55,7 +55,7 @@ class PFRecommend:
     self.__sim_mat = profile_data
     print('End train PF model...')
 
-  def recommend(self, limit):
+  def recommend(self, limit=10):
     df = self.__sim_mat
     df = df.sort_values(by=['score'], ascending=False).head(limit)
     ids = df["product_id"].tolist()
