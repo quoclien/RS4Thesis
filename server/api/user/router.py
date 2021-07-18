@@ -33,11 +33,11 @@ def login():
     except:
         return {'error': 'tài khoản hoặc mật khẩu không đúng'}
 
-@user_blueprint.route('/events', methods=['GET'])
-@authenticate
-def getReviews():
+@user_blueprint.route('/<string:user_id>/events', methods=['GET'])
+# @authenticate
+def getReviews(user_id):
     try:
-        user_id = request.user['user_id']
+        # user_id = request.user['user_id']
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
 

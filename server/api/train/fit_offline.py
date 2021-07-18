@@ -39,16 +39,16 @@ def fit_iir(raw_data):
     os.system(f'gzip -kf {str(p)}')
 
 
-# def fit_ubr(raw_data):
-#     urb_rec = UBRRecommender()
-#     clean_data = urb_rec.prepare_trainset(raw_data)
-#     urb_rec.fit(clean_data)
+def fit_ubr(raw_data):
+    urb_rec = UBRRecommender()
+    clean_data = urb_rec.prepare_trainset(raw_data)
+    urb_rec.fit(clean_data)
 
-#     # Save trained model
-#     p = Path(__file__).parent / 'ubr_rec/ubr_rec.joblib'
-#     joblib.dump(urb_rec, p)
-#     # Compress model
-#     os.system(f'gzip -kf {str(p)}')
+    # Save trained model
+    p = Path(__file__).parent / 'ubr_rec/ubr_rec.joblib'
+    joblib.dump(urb_rec, p)
+    # Compress model
+    os.system(f'gzip -kf {str(p)}')
 
 
 def fit_mf(raw_data):
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     sys.path.append(str(Path(__file__).parent.parent))
     from api.train.ctf_rec.model import CTFTextRecommender
     from api.train.iir_rec.model import IIRatingRecommender
-    # from api.train.ubr_rec.model import UBRRecommender
+    from api.train.ubr_rec.model import UBRRecommender
     from api.train.mf_rec.model import MFRecommend
     from api.train.mf_rec.utils import prepare_trainser
     from api.train.ucf_rec.model import UCFRecommender
@@ -151,11 +151,11 @@ if __name__ == '__main__':
         events_collection = db.events
         raw_data = events_collection.find({}, {'user_id': 1, 'product_id': 1, 'event_type': 1})
         fit_ucf(raw_data)
-    # elif model == 'ubr':
-    #     reviews_collection = db.reviews
-    #     raw_data = reviews_collection.find(
-    #         {}, {'user_id': 1, 'product_id': 1, 'rating': 1})
-    #     fit_ubr(raw_data)
+    elif model == 'ubr':
+        reviews_collection = db.reviews
+        raw_data = reviews_collection.find(
+            {}, {'user_id': 1, 'product_id': 1, 'rating': 1})
+        fit_ubr(raw_data)
     elif model == 'ctp':
         products_collection = db.products
         raw_data = products_collection.find({},{

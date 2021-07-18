@@ -39,11 +39,12 @@ class CTPRecommend:
 
   def recommend(self, properties_data, limit=10):
     df = self.__mat
-    # print(df)
-    for p in properties_data:
-      key = p+properties_data[p]['value']
-      df[key] *= properties_data[p]['score']
-      
+    # print(properties_data)
+    for pro in properties_data:
+      for p in properties_data[pro]:
+        key = pro+p['value']
+        df[key] *= p['score']
+    
     df['total_score'] = df.sum(axis=1)
     df = df.sort_values(by=['total_score'], ascending=False).iloc[:limit]
     ids = df.index.tolist()
