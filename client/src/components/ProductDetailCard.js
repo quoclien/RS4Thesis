@@ -28,54 +28,47 @@ const useStyles = makeStyles((theme) => ({
         // paddingTop: '56.25%', // 16:9
         width: "auto"
     },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
     note:{
         fontSize: "15px",
         lineHeight: "20px",
         fontWeight: 400,
-        color: "#242424"
+        color: "#242424",
+        marginTop: "10px",
+        marginRight: "5px"
     },
     title:{
         fontSize: "28px",
         lineHeight: "33px",
         fontWeight: 300,
-        color: "#242424"
+        color: "#242424",
+        marginRight: "5px"
     },
     subtitle:{
         fontSize: "34px",
         lineHeight: "40px",
         fontWeight: 500,
         color: "#000000",
-        padding: "5px"
+        padding: "5px",
+        marginRight: "5px"
     },
     descriptionTitle:{
         fontSize: "20px",
         lineHeight: "21px",
         fontWeight: 400,
-        color: "#333333"
+        color: "#333333",
+        marginRight: "5px"
     },
     description:{
         fontSize: "16px",
         lineHeight: "21px",
         fontWeight: 400,
-        color: "#242424"
+        color: "#242424",
+        marginRight: "5px",
+        marginBottom: "10px"
     },
     carouselContainer: {
         textAlign: "center"
-    }
-
+    },
 }));
 
 export default function ProductDetailCard(props) {
@@ -99,7 +92,7 @@ export default function ProductDetailCard(props) {
                         {props.subtitle}
                     </Typography>
                     <div style={{paddingTop: "10px"}}>
-                        <Typography variant={"h5"} component={"h6"} className={""}>
+                        <Typography variant={"h5"} component={"h6"} className={classes.descriptionTitle}>
                             Description:
                         </Typography>
                         <Typography variant={"p"} component={"p"} className={classes.description}>
