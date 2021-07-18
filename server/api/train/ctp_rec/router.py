@@ -18,7 +18,7 @@ if ctp_rec_path.is_file():
 
 # CORS(ctp_rec_blueprint)
 
-@ctp_rec_blueprint.route('/', methods=['POST'])
+@ctp_rec_blueprint.route('/', methods=['GET', 'POST'])
 def recommend():
   try:
     limit = request.args.get('limit', 10, type=int)

@@ -10,7 +10,7 @@ export default class InfiniteProductCardList extends Component {
     constructor() {
         super();
         this.state = {
-            photos: [],
+            products: [],
             loading: false,
             page: 0,
             prevY: 0
@@ -18,7 +18,7 @@ export default class InfiniteProductCardList extends Component {
     }
 
     componentDidMount() {
-        this.getPhotos(this.state.page);
+        this.getProducts(this.state.page);
 
         let options = {
             root: null,
@@ -33,23 +33,28 @@ export default class InfiniteProductCardList extends Component {
         this.observer.observe(this.loadingRef);
     }
 
-    getPhotos(page) {
+    getProducts(page) {
         this.setState({ loading: true });
         axios
             .get(
-                "http://127.0.0.1:5000/products?page=${page}"
+                "http://127.0.0.1:5000/products", {
+                    params: {
+                        page: this.state.page,
+                    }
+                }
             )
             .then(res => {
-                this.setState({ photos: [...this.state.photos, ...res.data] });
+                this.setState({ products: [...this.state.products, ...res.data] });
                 this.setState({ loading: false });
             });
+        console.log(this.state.products);
     }
 
     handleObserver(entities, observer) {
         const y = entities[0].boundingClientRect.y;
         if (this.state.prevY > y) {
             const curPage = this.state.page + 1;
-            this.getPhotos(curPage);
+            this.getProducts(curPage);
             this.setState({ page: curPage });
         }
         this.setState({ prevY: y });
@@ -75,16 +80,16 @@ export default class InfiniteProductCardList extends Component {
         return (
             <div className="container">
                 <Grid container style={{ minHeight: "800px" }}>
-                    {this.state.photos.map(item => (
+                    {this.state.products.map(item => (
                         <Grid item xs={3} key={item._id}>
                             <CustomizedCard
                                 cardContent={<ProductCard
-                                    imageUrl={item["image_urls"]}
-                                    key={item._id}
+                                    imageUrl={item.image}
+                                    key={item["product_id"]}
                                     title={item.name}
                                     subtitle={item.price}
                                     handleCardClick={() => {
-                                        this.handleCardClick(item._id)
+                                        this.handleCardClick(item["product_id"])
                                     }}
                                 />}
                                 cardAction={""}

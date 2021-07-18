@@ -58,37 +58,6 @@ export default function SignIn(props) {
                 history.push("/home");
             }
         });
-        let accessToken = GetAccessToken();
-        axios(
-            {
-                url: "https://m.media-amazon.com/images/I/81d1fpxXBcS._AC_SL1500_.jpg",
-                method: "GET",
-                // params: {
-                //     page: 0,
-                //     limit: 10,
-                // },
-                // data: {
-                //     product_group: {
-                //         "value": "Beverages",
-                //         "score": 5
-                //     },
-                //     product_category: {
-                //         "value": "Tea",
-                //         "score": 1.5
-                //     }
-                // },
-                headers: {
-                    'Access-Control-Allow-Origin' : '*',
-                    'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                },
-                // headers: {
-                //             "Authorization": "Bearer " + accessToken,
-                //         },
-            }
-        )
-            .then(response => {
-                console.log(response)
-            }).catch(e => {console.log(e)});
     }
     return (
         <React.Fragment>
