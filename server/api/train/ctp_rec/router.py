@@ -13,14 +13,14 @@ if ctp_rec_path.is_file():
     ctp_rec = joblib.load(ctp_rec_path)
 
 
-@ctp_rec_blueprint.route('/', methods=['GET'])
+@ctp_rec_blueprint.route('/get', methods=[ 'GET', 'POST'])
 def recommend():
   try:
     limit = request.args.get('limit', 10, type=int)
 
     body = request.get_json()
-    ids = ctp_rec.recommend(body, limit=limit)
-
+    ids = ctp_rec.recommend(body, limit)
+  
     cursor = db.products.find({'product_id': {'$in': ids}})
     products = [to_dict(doc) for doc in cursor]
     return {'data': products}
