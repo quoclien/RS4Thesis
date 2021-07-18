@@ -171,5 +171,6 @@ class UCFRecommender:
         [top_n_sim] = self.get_top_user(n=_n_user, uid=[uid])
         top_prods = np.array(
             list(map(lambda uids: self.get_top_prod(n=_n_item, uid=uids), top_n_sim)))
-
+        print(self.__sim_mat)
+        print(self.get_top_user(n=_n_user, uid=[uid]))
         return np.unique(top_prods.flatten()).tolist()[offset:offset + limit]

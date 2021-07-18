@@ -10,9 +10,11 @@ iir_rec = joblib.load(Path(__file__).parent / 'iir_rec.joblib')
 
 @iir_rec_blueprint.route('/<string:method>', methods=['GET'])
 def recommend(method):
-    pids = iir_rec.recommend(method)
-    reviews_collection = db.apps
-    cursor = reviews_collection.find({'id': {'$in': pids}})
-    print(cursor)
-    products = [to_dict(doc) for doc in cursor]
-    return {'data': products}
+    try:
+        pids = iir_rec.recommend(method)
+        products_collection = db.products
+        cursor = products_collection.find({'product_id': {'$in': pids}})
+        products = [to_dict(doc) for doc in cursor]
+        return {'data': products}
+    except:
+        return {'error': 'Lấy gợi ý sản phẩm thất bại'}

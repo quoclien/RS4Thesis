@@ -57,4 +57,5 @@ def prepare_trainset(raw_data):
     print(f'user_item shape: {user_item.shape}')
 
     print(len(user_item))
+    print(user_item)
     return user_item

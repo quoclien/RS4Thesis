@@ -20,8 +20,8 @@ def recommend():
 
     body = request.get_json()
     ids = ctp_rec.recommend(body, limit=limit)
-    # print(ids)
-    cursor = db.product.find({'_id': {'$in': ids}})
+
+    cursor = db.products.find({'product_id': {'$in': ids}})
     products = [to_dict(doc) for doc in cursor]
     return {'data': products}
   except:

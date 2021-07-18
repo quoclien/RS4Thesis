@@ -20,7 +20,7 @@ def getProducts():
             products = products_collection.find({}).skip(page*limit).limit(limit)
             return response_to_client(status= HTTP_Status.SUCCESS, data= dumps(products))
         else:
-            product = products_collection.find_one({"_id": product_id})
+            product = products_collection.find_one({"product_id": product_id})
             return response_to_client(status= HTTP_Status.SUCCESS, data= dumps(product))
     except:
         return {'error': 'Lấy sản phẩm thất bại'}

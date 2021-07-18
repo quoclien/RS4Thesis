@@ -13,7 +13,7 @@ def fit_ctf(raw_data):
     # Initiate and train model
     ctf_text_rec = CTFTextRecommender(options={
         '__language': 'english',
-        '__use_cols': ['name', 'category_code']
+        '__use_cols': ['name', 'description', 'brand', 'category']
     })
     data_items = ctf_text_rec.prepare_trainset(raw_data)
     ctf_text_rec.fit(data_items)
@@ -93,10 +93,10 @@ def fit_ctp(raw_data):
     os.system(f'gzip -kf {str(p)}')
 
 
-def fit_pf(products_data, raw_data):
+def fit_pf(products_data, review_data):
     pf_rec = PFRecommend()
-    profile_data = pf_rec.prepare_trainset(raw_data)
-    pf_rec.fit(products_data, profile_data)
+    profile_data = pf_rec.prepare_trainset(products_data, review_data)
+    pf_rec.fit(profile_data)
 
     # Save trained model
     p = Path(__file__).parent / 'pf_rec/pf_rec.joblib'
@@ -126,56 +126,60 @@ if __name__ == '__main__':
     model = args.model
 
     if model == 'ctf':
-        # raw_data = product_controller.find_product(
-        #     {}, {'_id': 1, 'product': 1, 'product_description': 1})
         products_collection = db.products
         products_data = products_collection.find({}, {
+            'product_id': 1,
             'name': 1,
-            'category_code': 1,
+            'description': 1,
+            'brand': 1,
+            'category': 1,
         })
         fit_ctf(products_data)
     elif model == 'iir':
-        reviews_collection = db.reviews
-        raw_data = reviews_collection.find({}, {'app_id': 1, 'rating': 1})
-        fit_iir(raw_data)
+        products_collection = db.products
+        products_data = products_collection.find({}, {
+            'product_id': 1,
+            'rating_1': 1,
+            'rating_2': 1,
+            'rating_3': 1,
+            'rating_4': 1,
+            'rating_5': 1,
+            'rating_count': 1,
+        })
+        fit_iir(products_data)
     elif model == 'ucf':
         events_collection = db.events
-        raw_data = events_collection.find({})
+        raw_data = events_collection.find({}, {'user_id': 1, 'product_id': 1, 'event_type': 1})
         fit_ucf(raw_data)
-    # elif model == 'mf':
+    # elif model == 'ubr':
     #     reviews_collection = db.reviews
-    #     raw_data = reviews_collection.find({}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
-    #     fit_mf(raw_data)
-    elif model == 'ubr':
-        reviews_collection = db.ratings
-        raw_data = reviews_collection.find(
-            {}, {'user_id': 1, 'movie_id': 1, 'rating': 1, 'unix_timestamp': 1})
-        fit_ubr(raw_data)
+    #     raw_data = reviews_collection.find(
+    #         {}, {'user_id': 1, 'product_id': 1, 'rating': 1})
+    #     fit_ubr(raw_data)
     elif model == 'ctp':
-        product_collection = db.product
-        raw_data = product_collection.find({},{
-            'product_group': 1,
-            'product_category': 1,
+        products_collection = db.products
+        raw_data = products_collection.find({},{
+            'product_id': 1,
+            'brand': 1,
+            'category': 1,
             'product_type': 1,
-            # 'unit_of_measure': 1,
-            # 'tax_exempt_yn': 1,
-            # 'promo_yn': 1,
-            'new_product_yn': 1,
+            'origin': 1,
+            'color': 1
         })
         fit_ctp(raw_data)
     elif model == 'pf':
-        event_collection = db.events
-        raw_data = event_collection.find({}, {
-            'brand': 1,
-            'event_type': 1,
-            'category_code': 1,
-            # 'dayofweek': 1,
-            # 'is_day': 1,
-            # 'uid': 1
+        reviews_collection = db.reviews
+        review_data = reviews_collection.find({}, {
+            'product_id': 1,
+            # 'user_id': 1,
+            'rating': 1,
         })
         products_collection = db.products
         products_data = products_collection.find({}, {
+            'product_id':1,
             'brand': 1,
-            'category_code': 1,
+            'category': 1,
+            'origin': 1,
+            'color':1 
         })
-        fit_pf(products_data, raw_data)
+        fit_pf(products_data, review_data)

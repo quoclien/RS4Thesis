@@ -20,6 +20,6 @@ def recommend(uid):
 
     pids = ucf_rec.recommend(uid, offset=offset, limit=limit)
     print(pids)
-    cursor = db.products.find({'_id': {'$in': pids}})
+    cursor = db.products.find({'product_id': {'$in': pids}})
     products = [to_dict(doc) for doc in cursor]
     return {'data': products}

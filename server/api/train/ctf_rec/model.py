@@ -28,12 +28,14 @@ class CTFTextRecommender:
 
         print('Preparing CTF Text trainerset...')
         df = pd.DataFrame(raw_data)
+        df = df.drop(columns='_id')
 
         # init option
         use_cols = self.__use_cols
         col_combined = self.__col_combined
         col_cleaned = self.__col_cleaned
 
+        print(df)
         # clean column
         df[col_combined] = df[use_cols].astype(str).apply(lambda x: ' '.join(x), axis=1)
         df[col_cleaned] = df[col_combined].apply(func=remove_non_ascii)
@@ -41,6 +43,7 @@ class CTFTextRecommender:
         df[col_cleaned] = df[col_cleaned].apply(func=remove_punctuation)
         df[col_cleaned] = df[col_cleaned].apply(func=remove_html)
 
+        print(df[col_cleaned])
         self.__data_cleaned = df
         print('Preparing CTF Text successful...')
         return df
@@ -58,7 +61,7 @@ class CTFTextRecommender:
 
         sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
         self.__sim_mat = sim
-
+        print(sim)
         print('Finish training model CTF Text...')
         self.__fitted = True
         return sim
@@ -69,10 +72,11 @@ class CTFTextRecommender:
 
         df = self.__data_cleaned
         sim = self.__sim_mat
-        idx = df.index[df['_id'] == iid]
+     
+        idx = df.index[df['product_id'] == iid]
         similar_indices = sim[idx[0]].argsort()[:-n_items:-1]
 
         pids = []
         for i in similar_indices:
-            pids.append(df['_id'].values[i])
+            pids.append(df['product_id'].values[i])
         return pids

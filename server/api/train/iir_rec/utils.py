@@ -10,6 +10,7 @@ import scipy.stats as st
 
 
 def wilson_lower_bound(pos, n, confidence=0.95):
+    n = float(n)
     if n == 0:
         return 0
     z = st.norm.ppf(1 - (1 - confidence) / 2)

@@ -21,9 +21,9 @@ def authenticate(done):
             
             if not decoded['valid']:
                 return unauth_response, 401
-            uid = decoded['payload']['username']
-            user = app.db['user'].find_one(
-                {'username': uid}, projection=['name', 'avatar', 'username', '_id'])
+            uid = decoded['payload']['user_id']
+            user = app.db['users'].find_one(
+                {'user_id': uid}, projection=['name', 'avatar', 'username', 'user_id'])
             if user:
                 req.user = user
                 # return done(uid, *args, **kwargs)
