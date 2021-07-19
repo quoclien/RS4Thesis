@@ -48,10 +48,9 @@ export default function ProductCard(props) {
                 {props.title ? props.title : "Amazon.com $50 Gift Cards, Pack of 50 (Old Version) (Classic White Card Design)"}
             </Typography>
             <Typography variant={"h6"} component={"h2"} color={"black"} align={"center"}>
-                {/*{*/}
-                {/*    props.subtitle*/}
-                {/*}*/}
-                $1,250.00
+                {
+                    props.subtitle ? props.subtitle : "$1,250.00"
+                }
             </Typography>
         </div>
     );

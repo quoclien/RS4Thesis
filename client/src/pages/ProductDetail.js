@@ -24,7 +24,7 @@ export default function ProductDetail() {
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
     const [thirdLine, setThirdLine] = useState([]);
-    const [product, setProduct] = useState(mockDataEvent[0]);
+    const [product, setProduct] = useState([]);
 
     const productDetailUrl = "http://127.0.0.1:5000/products";
     const firstUrlPathVar = GetViewingProductId();
@@ -60,7 +60,7 @@ export default function ProductDetail() {
             console.log(e)
         });
 
-
+        // Get second recommender product line
         axios.get(secondUrl, {
             params: {
                 page: 0,
@@ -73,6 +73,7 @@ export default function ProductDetail() {
             console.log(error);
         });
 
+        // Get third recommender product line
         axios(
             {
                 url: thirdUrl,

@@ -11,13 +11,16 @@ import ProductLineKeys from "../models/ProductLineKeys";
 import {GetAccessToken, GetUserId} from "../utils/LocalStorage";
 
 export default function UserProfile(props) {
-    const [data, setData] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
+    const [events, setEvents] = useState([]);
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
     const [thirdLine, setThirdLine] = useState([]);
 
     const userId = GetUserId();
-    const url = `http://127.0.0.1:5000/user/${userId}/events`;
+    const eventUrl = `http://127.0.0.1:5000/user/${userId}/events`;
+
+    const infoUrl = `http://127.0.0.1:5000/user/${userId}`;
 
     const accessToken = GetAccessToken();
     const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
@@ -32,7 +35,16 @@ export default function UserProfile(props) {
             history.push("/");
             return;
         }
-        axios.get(url, {
+
+        // Get info of current user
+        axios.get(infoUrl)
+            .then(response => {
+                let info = response.data.data;
+                setUserInfo(info);
+            })
+
+        // Get event for current user
+        axios.get(eventUrl, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer " + accessToken,
@@ -43,11 +55,12 @@ export default function UserProfile(props) {
             }
         }).then(response => {
             let events = response.data.data;
-            setData(events);
+            setEvents(events);
         }).catch(error => {
             props.showSnackbar("You have no interactions so far.", "alert");
         });
 
+        // Get first recommender product line
         axios.get(firstUrl, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -77,6 +90,8 @@ export default function UserProfile(props) {
             }).catch(e => {
             console.log(e)
         });
+
+        // Get third recommender product line
         axios(
             {
                 url: thirdUrl,
@@ -115,10 +130,10 @@ export default function UserProfile(props) {
                 handleLeftButtonClick={handleOpenHomePage}
                 handleRightButtonClick={handleSignOut}/>
             <Container>
-                <UserInfo userID={data["user_id"]}/>
+                <UserInfo userInfo={userInfo}/>
                 <ProductLine
                     lineTitle={"Products you have viewed: "}
-                    lineOfProducts={data}
+                    lineOfProducts={events}
                     lineKeys={productLineKeys}
                 />
                 <Grid container style={{marginTop: "20px"}}>

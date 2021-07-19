@@ -14,19 +14,23 @@ const useStyle = makeStyles((theme) => ({
     bigAvatar: {
         width: theme.spacing(7),
         height: theme.spacing(7)
+    },
+    name:{
+
     }
 }))
 
 export default function UserInfo(props) {
     const classes = useStyle();
+    const userInfo = props.userInfo;
     return (
         <div className={classes.flexParent}>
             <div className={classes.flexChild}>
-                <Avatar alt="Guest" src={"../assets/images/reactlogo192.png"} className={classes.bigAvatar}></Avatar>
+                <Avatar alt={"Avatar of " + userInfo.username} src={userInfo.avatar} className={classes.bigAvatar}/>
             </div>
             <div className={classes.flexChild}>
-                <Typography variant={"h6"} component={"p"}>
-                    {props.userID}
+                <Typography variant={"h6"} component={"p"} className={classes.name}>
+                    {userInfo.name}
                 </Typography>
             </div>
         </div>
