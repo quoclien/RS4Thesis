@@ -14,6 +14,7 @@ export default function UserProfile(props) {
     const [data, setData] = useState([]);
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
+    const [thirdLine, setThirdLine] = useState([]);
 
     const userId = GetUserId();
     const url = `http://127.0.0.1:5000/user/${userId}/events`;
@@ -22,12 +23,10 @@ export default function UserProfile(props) {
     const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
 
     const firstUrl = `http://127.0.0.1:5000/ucf_rec/${userId}`;
-    const secondUrl = "http://127.0.0.1:5000/pf_rec";
-
+    const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
     const thirdUrl = "http://127.0.0.1:5000/ubr_rec/";
 
-    const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
-    const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
+    const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
         if (accessToken === "") {
             history.push("/");
@@ -65,18 +64,19 @@ export default function UserProfile(props) {
             console.log(error);
         });
 
-        axios.get(secondUrl, {
-            params: {
-                page: 0,
-                limit: 10
+        // Get second recommender product line
+        axios(
+            {
+                url: secondUrl,
+                method: "GET",
             }
-        }).then(response => {
-            let events = response.data.data;
-            setSecondLine(events);
-        }).catch(error => {
-            console.log(error);
+        )
+            .then(response => {
+                let productLine = response.data.data;
+                setSecondLine(productLine);
+            }).catch(e => {
+            console.log(e)
         });
-
         axios(
             {
                 url: thirdUrl,
@@ -92,8 +92,8 @@ export default function UserProfile(props) {
             }
         )
             .then(response => {
-                let productLine = response;
-                console.log(productLine)
+                let productLine = response.data.data;
+                setThirdLine(productLine)
             }).catch(e => {
             console.log(e)
         });
@@ -124,17 +124,25 @@ export default function UserProfile(props) {
                 <Grid container style={{marginTop: "20px"}}>
                     <Grid item xs={12}>
                         <ProductLine
-                            lineTitle={"You should try"}
+                            lineTitle={"UCF"}
                             lineOfProducts={firstLine}
-                            lineKeys={firstLineKeys}
+                            lineKeys={lineKeys}
                         >
                         </ProductLine>
                     </Grid>
                     <Grid item xs={12}>
                         <ProductLine
-                            lineTitle={"Others also try"}
+                            lineTitle={"IIR"}
                             lineOfProducts={secondLine}
-                            lineKeys={secondLineKeys}
+                            lineKeys={lineKeys}
+                        >
+                        </ProductLine>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ProductLine
+                            lineTitle={"UBR"}
+                            lineOfProducts={thirdLine}
+                            lineKeys={lineKeys}
                         >
                         </ProductLine>
                     </Grid>

@@ -23,16 +23,16 @@ export default function ProductDetail() {
     let productId;
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
+    const [thirdLine, setThirdLine] = useState([]);
     const [product, setProduct] = useState(mockDataEvent[0]);
 
     const productDetailUrl = "http://127.0.0.1:5000/products";
     const firstUrlPathVar = GetViewingProductId();
     const firstUrl = `http://127.0.0.1:5000/ctf_rec/${firstUrlPathVar}`;
-    const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
+    const secondUrl = "http://127.0.0.1:5000/pf_rec";
     const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
-    const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
-    const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
+    const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
         if (GetAccessToken() === "") {
             history.push("/");
@@ -60,18 +60,17 @@ export default function ProductDetail() {
             console.log(e)
         });
 
-        // Get second recommender product line
-        axios(
-            {
-                url: secondUrl,
-                method: "GET",
+
+        axios.get(secondUrl, {
+            params: {
+                page: 0,
+                limit: 10
             }
-        )
-            .then(response => {
-                let productLine = response.data.data;
-                setSecondLine(productLine);
-            }).catch(e => {
-            console.log(e)
+        }).then(response => {
+            let events = response.data.data;
+            setSecondLine(events);
+        }).catch(error => {
+            console.log(error);
         });
 
         axios(
@@ -92,15 +91,11 @@ export default function ProductDetail() {
                         }
                     ]
                 },
-                // headers: {
-                //     'Access-Control-Allow-Origin' : '*',
-                //     'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                // },
             }
         )
             .then(response => {
                 let productLine = response.data.data;
-                console.log(productLine)
+                setThirdLine(productLine);
             }).catch(e => {
             console.log(e)
         });
@@ -135,17 +130,25 @@ export default function ProductDetail() {
             <Grid container className={classes.content}>
                 <Grid item xs={12}>
                     <ProductLine
-                        lineTitle={"You should try"}
+                        lineTitle={"CTF"}
                         lineOfProducts={firstLine}
-                        lineKeys={firstLineKeys}
+                        lineKeys={lineKeys}
                     >
                     </ProductLine>
                 </Grid>
                 <Grid item xs={12}>
                     <ProductLine
-                        lineTitle={"Others also try"}
+                        lineTitle={"PF"}
                         lineOfProducts={secondLine}
-                        lineKeys={secondLineKeys}
+                        lineKeys={lineKeys}
+                    >
+                    </ProductLine>
+                </Grid>
+                <Grid item xs={12}>
+                    <ProductLine
+                        lineTitle={"CTP"}
+                        lineOfProducts={thirdLine}
+                        lineKeys={lineKeys}
                     >
                     </ProductLine>
                 </Grid>
