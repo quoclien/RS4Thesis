@@ -76,19 +76,19 @@ export default function ProductDetail(){
         axios(
             {
                 url: thirdUrl,
-                method: "POST",
+                method: "GET",
                 params: {
                     page: 0,
                 },
                 data: {
-                    "brand": {
-                        "value": "MOBELL",
-                        "score": 10
-                    },
-                    // "category": {
-                    //     "value": "Điện thoại",
-                    //     "score": 2
-                    // }
+                    "origin": [{
+                        "value": "Hàn Quốc",
+                        "score": 5
+                    }],
+                    "category": [{
+                        "value": "Điện thoại",
+                        "score": 2
+                    }]
                 },
                 // headers: {
                 //     'Access-Control-Allow-Origin' : '*',

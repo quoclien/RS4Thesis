@@ -162,7 +162,7 @@ if __name__ == '__main__':
             'product_id': 1,
             'brand': 1,
             'category': 1,
-            'product_type': 1,
+            'product_type': 1, 
             'origin': 1,
             'color': 1
         })
