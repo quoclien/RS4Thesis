@@ -6,7 +6,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetAccessToken, GetViewingProductId} from "../utils/LocalStorage";
+import {GetAccessToken, GetViewingProduct} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
@@ -20,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductDetail() {
     const classes = useStyles();
-    let productId;
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
     const [thirdLine, setThirdLine] = useState([]);
     const [product, setProduct] = useState([]);
 
     const productDetailUrl = "http://127.0.0.1:5000/products";
-    const firstUrlPathVar = GetViewingProductId();
-    const firstUrl = `http://127.0.0.1:5000/ctf_rec/${firstUrlPathVar}`;
+    const viewingProduct = JSON.parse(GetViewingProduct());
+    const productId = viewingProduct["product_id"];
+    const firstUrl = `http://127.0.0.1:5000/ctf_rec/${productId}`;
     const secondUrl = "http://127.0.0.1:5000/pf_rec";
     const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
@@ -39,7 +39,6 @@ export default function ProductDetail() {
             return;
         }
         // Get product for product detail card
-        productId = GetViewingProductId();
         axios.get(productDetailUrl, {
             params: {
                 product_id: productId,

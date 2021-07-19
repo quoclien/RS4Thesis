@@ -60,7 +60,7 @@ export default class InfiniteProductCardList extends Component {
     }
 
     handleCardClick(product) {
-        SetViewingProduct(product);
+        SetViewingProduct(JSON.stringify(product));
         history.push("/detail");
     }
 
