@@ -4,7 +4,7 @@ import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
 import {makeStyles} from "@material-ui/core/styles";
 import history from "../utils/History";
-import {SetViewingProductId} from "../utils/LocalStorage";
+import {SetViewingProduct} from "../utils/LocalStorage";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -59,8 +59,8 @@ export default function ProductLine(props) {
         }
     };
 
-    function handleCardClick(id) {
-        SetViewingProductId(id);
+    function handleCardClick(product) {
+        SetViewingProduct(product);
         if (history.location.pathname === "/detail") {
             history.go(0);
         } else {
@@ -101,7 +101,7 @@ export default function ProductLine(props) {
                             title={_title}
                             subtitle={_subtitle}
                             handleCardClick={() => {
-                                handleCardClick(_key)
+                                handleCardClick(products[i])
                             }}
                         />}
                         cardAction={""}

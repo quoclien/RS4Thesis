@@ -18,10 +18,10 @@ export function ClearStorage() {
     localStorage.clear()
 };
 
-export function SetViewingProductId(productId) {
-    localStorage.setItem("productId", productId)
+export function SetViewingProduct(product) {
+    localStorage.setItem("product", product)
 }
 
-export function GetViewingProductId() {
-    return localStorage.getItem("productId")
+export function GetViewingProduct() {
+    return localStorage.getItem("product")
 }

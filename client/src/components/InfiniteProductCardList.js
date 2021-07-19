@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
-import {SetViewingProductId} from "../utils/LocalStorage";
+import {SetViewingProduct} from "../utils/LocalStorage";
 import history from "../utils/History";
 import {Grid} from "@material-ui/core";
 
@@ -59,8 +59,8 @@ export default class InfiniteProductCardList extends Component {
         this.setState({prevY: y});
     }
 
-    handleCardClick(id) {
-        SetViewingProductId(id);
+    handleCardClick(product) {
+        SetViewingProduct(product);
         history.push("/detail");
     }
 
@@ -87,7 +87,7 @@ export default class InfiniteProductCardList extends Component {
                                     title={item.name}
                                     subtitle={item.price}
                                     handleCardClick={() => {
-                                        this.handleCardClick(item["product_id"])
+                                        this.handleCardClick(item)
                                     }}
                                 />}
                                 cardAction={""}
