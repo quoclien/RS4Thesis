@@ -12,7 +12,7 @@ urb_rec = UBRRecommender()
 if ubr_rec_path.is_file():
     ubr_rec = joblib.load(ubr_rec_path)
 
-@ubr_rec_blueprint.route('/', methods=['GET'])
+@ubr_rec_blueprint.route('/', methods=[ 'GET', 'POST'])
 def recommend():
     try:
         body = req.get_json()

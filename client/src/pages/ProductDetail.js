@@ -69,26 +69,26 @@ export default function ProductDetail(){
         )
             .then(response => {
             let productLine = response.data.data;
-            console.log(productLine)
             setSecondLine(productLine);
         }).catch(e => {console.log(e)});
 
         axios(
             {
                 url: thirdUrl,
-                method: "GET",
-                params: {
-                    page: 0,
-                },
+                method: "POST",
                 data: {
-                    "origin": [{
-                        "value": "Hàn Quốc",
-                        "score": 5
-                    }],
-                    "category": [{
-                        "value": "Điện thoại",
-                        "score": 2
-                    }]
+                    "origin": [
+                        {
+                            "value": "Hàn Quốc",
+                            "score": 5
+                        }
+                    ],
+                    "category": [
+                        {
+                            "value": "Điện thoại",
+                            "score": 2
+                        }
+                    ]
                 },
                 // headers: {
                 //     'Access-Control-Allow-Origin' : '*',
@@ -97,7 +97,7 @@ export default function ProductDetail(){
             }
         )
             .then(response => {
-                let productLine = response;
+                let productLine = response.data.data;
                 console.log(productLine)
             }).catch(e => {console.log(e)});
     },[])

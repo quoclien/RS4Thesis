@@ -8,7 +8,7 @@ import {Container, Grid} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ProductLineKeys from "../models/ProductLineKeys";
-import {GetAccessToken} from "../utils/LocalStorage";
+import {GetAccessToken, GetUserId} from "../utils/LocalStorage";
 import {mockDataEvent} from "../utils/MockData";
 
 export default function UserProfile(props){
@@ -16,14 +16,16 @@ export default function UserProfile(props){
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
 
-    const url = "http://127.0.0.1:5000/user/events";
+    const userId = GetUserId();
+    const url = `http://127.0.0.1:5000/user/${userId}/events`;
 
     const accessToken = GetAccessToken();
     const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
 
-    const firstUrlPathVar = 1;
-    const firstUrl = `http://127.0.0.1:5000/ucf_rec/${firstUrlPathVar}`;
+    const firstUrl = `http://127.0.0.1:5000/ucf_rec/${userId}`;
     const secondUrl = "http://127.0.0.1:5000/pf_rec";
+
+    const thirdUrl = "http://127.0.0.1:5000/ubr_rec/";
 
     const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
@@ -64,9 +66,6 @@ export default function UserProfile(props){
         });
 
         axios.get(secondUrl, {
-            // headers: {
-            //     "Authorization": "Bearer " + accessToken
-            // },s
             params: {
                 page: 0,
                 limit: 10
@@ -77,6 +76,29 @@ export default function UserProfile(props){
         }).catch(error => {
             console.log(error);
         });
+
+        axios(
+            {
+                url: thirdUrl,
+                method: "POST",
+                data: {
+                    "actions": [
+                        {
+                            "product_id": "1",
+                            "rating": 3
+                        }
+                    ]
+                },
+                // headers: {
+                //     'Access-Control-Allow-Origin' : '*',
+                //     'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                // },
+            }
+        )
+            .then(response => {
+                let productLine = response;
+                console.log(productLine)
+            }).catch(e => {console.log(e)});
     }, []);
 
     function handleOpenHomePage(){

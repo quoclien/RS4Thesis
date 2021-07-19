@@ -47,7 +47,6 @@ export default class InfiniteProductCardList extends Component {
                 this.setState({ products: [...this.state.products, ...res.data] });
                 this.setState({ loading: false });
             });
-        console.log(this.state.products);
     }
 
     handleObserver(entities, observer) {

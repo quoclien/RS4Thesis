@@ -78,7 +78,7 @@ export default function ProductDetailCard(props) {
     return (
         <Card className={classes.root}>
             <Grid container>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} style={{textAlign: "center"}}>
                     <img src={props.imageUrl} alt={"image of product"} className={classes.media}/>
                 </Grid>
                 <Grid item xs={12} md={7}>
