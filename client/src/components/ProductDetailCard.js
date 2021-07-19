@@ -1,22 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {colors, Grid} from "@material-ui/core";
-import Carousel from "react-multi-carousel";
+import {Grid} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         // paddingTop: '56.25%', // 16:9
         width: "auto"
     },
-    note:{
+    note: {
         fontSize: "15px",
         lineHeight: "20px",
         fontWeight: 400,
@@ -36,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "10px",
         marginRight: "5px"
     },
-    title:{
+    title: {
         fontSize: "28px",
         lineHeight: "33px",
         fontWeight: 300,
         color: "#242424",
         marginRight: "5px"
     },
-    subtitle:{
+    subtitle: {
         fontSize: "34px",
         lineHeight: "40px",
         fontWeight: 500,
@@ -51,14 +37,14 @@ const useStyles = makeStyles((theme) => ({
         padding: "5px",
         marginRight: "5px"
     },
-    descriptionTitle:{
+    descriptionTitle: {
         fontSize: "20px",
         lineHeight: "21px",
         fontWeight: 400,
         color: "#333333",
         marginRight: "5px"
     },
-    description:{
+    description: {
         fontSize: "16px",
         lineHeight: "21px",
         fontWeight: 400,
@@ -83,7 +69,7 @@ export default function ProductDetailCard(props) {
                 </Grid>
                 <Grid item xs={12} md={7}>
                     <Typography variant={"p"} component={"p"} className={classes.note}>
-                        {"Brand: " + props.brand +" | Category: " + props.category}
+                        {"Brand: " + props.brand + " | Category: " + props.category}
                     </Typography>
                     <Typography variant={"h1"} component={"h1"} className={classes.title}>
                         {props.title}

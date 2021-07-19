@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
@@ -34,7 +34,7 @@ export default class InfiniteProductCardList extends Component {
     }
 
     getProducts(page) {
-        this.setState({ loading: true });
+        this.setState({loading: true});
         axios
             .get(
                 "http://127.0.0.1:5000/products", {
@@ -44,8 +44,8 @@ export default class InfiniteProductCardList extends Component {
                 }
             )
             .then(res => {
-                this.setState({ products: [...this.state.products, ...res.data] });
-                this.setState({ loading: false });
+                this.setState({products: [...this.state.products, ...res.data]});
+                this.setState({loading: false});
             });
     }
 
@@ -54,13 +54,12 @@ export default class InfiniteProductCardList extends Component {
         if (this.state.prevY > y) {
             const curPage = this.state.page + 1;
             this.getProducts(curPage);
-            this.setState({ page: curPage });
+            this.setState({page: curPage});
         }
-        this.setState({ prevY: y });
+        this.setState({prevY: y});
     }
 
-    handleCardClick(id)
-    {
+    handleCardClick(id) {
         SetViewingProductId(id);
         history.push("/detail");
     }
@@ -74,11 +73,11 @@ export default class InfiniteProductCardList extends Component {
         };
 
         // To change the loading icon behavior
-        const loadingTextCSS = { display: this.state.loading ? "block" : "none" };
+        const loadingTextCSS = {display: this.state.loading ? "block" : "none"};
 
         return (
             <div className="container">
-                <Grid container style={{ minHeight: "800px" }}>
+                <Grid container style={{minHeight: "800px"}}>
                     {this.state.products.map(item => (
                         <Grid item xs={3} key={item._id}>
                             <CustomizedCard

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, Typography, Paper} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import CustomizedCard from "./CustomizedCard";
 import ProductCard from "./ProductCard";
 import {makeStyles} from "@material-ui/core/styles";
@@ -42,77 +42,67 @@ export default function ProductLine(props) {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
+            breakpoint: {max: 4000, min: 3000},
             items: 5
         },
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: {max: 3000, min: 1024},
             items: 3
         },
         tablet: {
-            breakpoint: { max: 1024, min: 464 },
+            breakpoint: {max: 1024, min: 464},
             items: 2
         },
         mobile: {
-            breakpoint: { max: 464, min: 0 },
+            breakpoint: {max: 464, min: 0},
             items: 1
         }
     };
 
-    function handleCardClick(id)
-    {
+    function handleCardClick(id) {
         SetViewingProductId(id);
-        if (history.location.pathname === "/detail")
-        {
+        if (history.location.pathname === "/detail") {
             history.go(0);
-        }
-        else
-        {
+        } else {
             history.push("/detail");
         }
     }
 
     function generateLineOfProducts(keys, products) {
         let data = [];
-        if (products.length > 0)
-        {
+        if (products.length > 0) {
             for (let i = 0; i < products.length; i++) {
                 let _imageUrl, _key, _title, _subtitle;
-                _imageUrl = _key = _title = _subtitle  = products[i] ;
+                _imageUrl = _key = _title = _subtitle = products[i];
                 let imageUrlArray = [];
-                if (keys.imageUrl !== "")
-                {
+                if (keys.imageUrl !== "") {
                     imageUrlArray = keys.imageUrl.split(".");
                 }
                 let keyArray = keys.id.split(".");
                 let titleArray = keys.title.split(".");
                 let subtitleArray = keys.subtitle.split(".");
-                for (let val of imageUrlArray)
-                {
+                for (let val of imageUrlArray) {
                     _imageUrl = _imageUrl[val];
                 }
-                for (let val of keyArray)
-                {
+                for (let val of keyArray) {
                     _key = _key[val];
                 }
-                for (let val of titleArray)
-                {
+                for (let val of titleArray) {
                     _title = _title[val];
                 }
-                for (let val of subtitleArray)
-                {
+                for (let val of subtitleArray) {
                     _subtitle = _subtitle[val];
                 }
                 data.push(
                     <CustomizedCard
                         cardContent={<ProductCard
-                        imageUrl={_imageUrl}
-                        key={_key}
-                        title={_title}
-                        subtitle={_subtitle}
-                        handleCardClick={() => {
-                            handleCardClick(_key)
-                        }}
+                            imageUrl={_imageUrl}
+                            key={_key}
+                            title={_title}
+                            subtitle={_subtitle}
+                            handleCardClick={() => {
+                                handleCardClick(_key)
+                            }}
                         />}
                         cardAction={""}
                     />
@@ -122,6 +112,7 @@ export default function ProductLine(props) {
         return data;
 
     }
+
     return (
         <div className={classes.root}>
             <Typography component="h2" variant="h5" color="primary" gutterBottom
@@ -147,7 +138,7 @@ export default function ProductLine(props) {
                 renderDotsOutside={false}
                 slidesToSlide={2}
             >
-                {generateLineOfProducts(props.lineKeys ,props.lineOfProducts)}
+                {generateLineOfProducts(props.lineKeys, props.lineOfProducts)}
             </Carousel>
         </div>
     );

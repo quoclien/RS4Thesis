@@ -3,16 +3,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import history from "../utils/History";
 import axios from "axios";
-import {ClearStorage, GetAccessToken, SetAccessToken, SetUserId} from "../utils/LocalStorage";
+import {ClearStorage, SetAccessToken, SetUserId} from "../utils/LocalStorage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,17 +39,14 @@ export default function SignIn(props) {
 
     const url = "http://127.0.0.1:5000/user/login";
 
-    const handleSignIn = (acc, pass)  => {
+    const handleSignIn = (acc, pass) => {
         axios.post(url, {
             username: acc,
             password: pass
         }).then((response) => {
-            if (response.data.hasOwnProperty("error"))
-            {
+            if (response.data.hasOwnProperty("error")) {
                 props.showSnackbar("Please check your username and password", "error");
-            }
-            else
-            {
+            } else {
                 props.showSnackbar("Welcome back", "success");
                 SetAccessToken(response.data.data.token);
                 SetUserId(response.data.data["user_id"]);

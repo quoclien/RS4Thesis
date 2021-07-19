@@ -1,17 +1,16 @@
 import {Container, Grid} from "@material-ui/core";
 import Dashboard from "../components/Dashboard";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import {ExitToApp} from "@material-ui/icons";
 import React, {useEffect, useState} from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetAccessToken, GetViewingProduct, GetViewingProductId} from "../utils/LocalStorage";
+import {GetAccessToken, GetViewingProductId} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
-import {mockDataCtf, mockDataEvent, mockDataPC} from "../utils/MockData";
+import {mockDataEvent} from "../utils/MockData";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function ProductDetail(){
+export default function ProductDetail() {
     const classes = useStyles();
     let productId;
     const [firstLine, setFirstLine] = useState([]);
@@ -35,8 +34,7 @@ export default function ProductDetail(){
     const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
-        if (GetAccessToken() === "")
-        {
+        if (GetAccessToken() === "") {
             history.push("/");
             return;
         }
@@ -58,7 +56,9 @@ export default function ProductDetail(){
         axios.get(firstUrl).then(response => {
             let productLine = response.data.data;
             setFirstLine(productLine);
-        }).catch(e => {console.log(e)});
+        }).catch(e => {
+            console.log(e)
+        });
 
         // Get second recommender product line
         axios(
@@ -68,9 +68,11 @@ export default function ProductDetail(){
             }
         )
             .then(response => {
-            let productLine = response.data.data;
-            setSecondLine(productLine);
-        }).catch(e => {console.log(e)});
+                let productLine = response.data.data;
+                setSecondLine(productLine);
+            }).catch(e => {
+            console.log(e)
+        });
 
         axios(
             {
@@ -99,16 +101,20 @@ export default function ProductDetail(){
             .then(response => {
                 let productLine = response.data.data;
                 console.log(productLine)
-            }).catch(e => {console.log(e)});
-    },[])
-    function handleOpenHomePage(){
+            }).catch(e => {
+            console.log(e)
+        });
+    }, [])
+
+    function handleOpenHomePage() {
         history.push("/home");
     }
 
-    function handleSignOut(){
+    function handleSignOut() {
         history.push("/");
     }
-    return(
+
+    return (
         <Container fixed>
             <Dashboard
                 leftButtonIcon={<HomeIcon/>}

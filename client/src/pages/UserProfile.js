@@ -9,9 +9,8 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ProductLineKeys from "../models/ProductLineKeys";
 import {GetAccessToken, GetUserId} from "../utils/LocalStorage";
-import {mockDataEvent} from "../utils/MockData";
 
-export default function UserProfile(props){
+export default function UserProfile(props) {
     const [data, setData] = useState([]);
     const [firstLine, setFirstLine] = useState([]);
     const [secondLine, setSecondLine] = useState([]);
@@ -30,13 +29,13 @@ export default function UserProfile(props){
     const firstLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     const secondLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
-        if (accessToken === "")
-        {
+        if (accessToken === "") {
             history.push("/");
             return;
         }
         axios.get(url, {
-            headers: {"Access-Control-Allow-Origin": "*",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer " + accessToken,
             },
             params: {
@@ -51,7 +50,8 @@ export default function UserProfile(props){
         });
 
         axios.get(firstUrl, {
-            headers: {"Access-Control-Allow-Origin": "*",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer " + accessToken,
             },
             params: {
@@ -89,26 +89,25 @@ export default function UserProfile(props){
                         }
                     ]
                 },
-                // headers: {
-                //     'Access-Control-Allow-Origin' : '*',
-                //     'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                // },
             }
         )
             .then(response => {
                 let productLine = response;
                 console.log(productLine)
-            }).catch(e => {console.log(e)});
+            }).catch(e => {
+            console.log(e)
+        });
     }, []);
 
-    function handleOpenHomePage(){
+    function handleOpenHomePage() {
         history.push("/home");
     }
 
-    function handleSignOut(){
+    function handleSignOut() {
         history.push("/");
     }
-    return(
+
+    return (
         <div>
             <Dashboard
                 leftButtonIcon={<HomeIcon/>}

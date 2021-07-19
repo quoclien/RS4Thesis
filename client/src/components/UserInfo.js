@@ -1,7 +1,7 @@
-import {Avatar, Container, Typography} from "@material-ui/core";
+import {Avatar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
-const useStyle = makeStyles((theme) =>({
+const useStyle = makeStyles((theme) => ({
     flexParent: {
         display: 'flex',
         alignItems: 'center',
@@ -10,18 +10,16 @@ const useStyle = makeStyles((theme) =>({
         marginTop: "80px",
         marginBottom: "10px"
     },
-    flexChild: {
-
-    },
+    flexChild: {},
     bigAvatar: {
         width: theme.spacing(7),
         height: theme.spacing(7)
     }
 }))
 
-export default function UserInfo(props){
+export default function UserInfo(props) {
     const classes = useStyle();
-    return(
+    return (
         <div className={classes.flexParent}>
             <div className={classes.flexChild}>
                 <Avatar alt="Guest" src={"../assets/images/reactlogo192.png"} className={classes.bigAvatar}></Avatar>

@@ -10,7 +10,7 @@ import ProductDetail from "./pages/ProductDetail";
 
 
 function NotiStackWrapper() {
-    const { enqueueSnackbar } = useSnackbar();
+    const {enqueueSnackbar} = useSnackbar();
 
     return (
         <Router history={history}>

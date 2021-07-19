@@ -1,5 +1,5 @@
 import React from "react"
-import {Card, CardActionArea, Paper, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import altImg from "../assets/images/reactlogo192.png";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -38,7 +38,9 @@ export default function ProductCard(props) {
     const classes = useStyles();
     return (
         <div className={classes.root} onClick={props.handleCardClick}>
-            <img src={props.imageUrl ? props.imageUrl :"https://images-na.ssl-images-amazon.com/images/I/41fby%2BUjOJL.jpg"} alt={altImg} className={classes.image}/>
+            <img
+                src={props.imageUrl ? props.imageUrl : "https://images-na.ssl-images-amazon.com/images/I/41fby%2BUjOJL.jpg"}
+                alt={altImg} className={classes.image}/>
             <Typography variant={"h5"} component={"h1"} color={"black"} align={"center"} className={classes.title}>
                 {/*{*/}
                 {/*    props.title*/}
