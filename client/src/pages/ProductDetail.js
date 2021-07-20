@@ -29,7 +29,7 @@ export default function ProductDetail() {
     const viewingProduct = GetViewingProduct();
     const productId = viewingProduct["product_id"];
     const firstUrl = `http://127.0.0.1:5000/ctf_rec/${productId}`;
-    const secondUrl = "http://127.0.0.1:5000/pf_rec";
+    const secondUrl = "http://127.0.0.1:5000/pf_rec/null";
     const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
     const ctpDefaultBody = {
