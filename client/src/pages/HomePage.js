@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 import InfiniteProductCardList from "../components/InfiniteProductCardList";
+import {GetUserId} from "../utils/LocalStorage";
 
 const axios = require('axios').default;
 
@@ -28,7 +29,9 @@ function HomePage() {
     }
 
     useEffect(() => {
-
+        if (GetUserId() === null) {
+            history.push("/");
+        }
     }, [])
 
     const classes = useStyles();

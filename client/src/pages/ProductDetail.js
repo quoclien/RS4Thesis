@@ -6,7 +6,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetAccessToken, GetUserId, GetViewingProduct} from "../utils/LocalStorage";
+import {GetUserId, GetViewingProduct} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
@@ -25,11 +25,12 @@ export default function ProductDetail() {
     const [thirdLine, setThirdLine] = useState([]);
     const [product, setProduct] = useState([]);
 
+    const userId = GetUserId();
     const addEventUrl = "http://127.0.0.1:5000/user/add-events";
     const productDetailUrl = "http://127.0.0.1:5000/products";
     const viewingProduct = GetViewingProduct();
-    const productId = viewingProduct["product_id"];
-    const firstUrl = `http://127.0.0.1:5000/ctf_rec/${productId}`;
+    let productId;
+    const firstUrl = `http://127.0.0.1:5000/ctf_rec/`;
     const secondUrl = "http://127.0.0.1:5000/pf_rec/null";
     const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
@@ -50,10 +51,12 @@ export default function ProductDetail() {
 
     const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
-        if (GetAccessToken() === "") {
+        if (userId === null) {
             history.push("/");
             return;
         }
+
+        productId = viewingProduct["product_id"];
 
         axios({
             url: addEventUrl,
@@ -80,7 +83,7 @@ export default function ProductDetail() {
         });
 
         // Get first recommender product line
-        axios.get(firstUrl).then(response => {
+        axios.get(firstUrl + productId).then(response => {
             let productLine = response.data.data;
             setFirstLine(productLine);
         }).catch(e => {

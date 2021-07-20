@@ -33,7 +33,7 @@ export default function UserProfile(props) {
 
     const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
-        if (accessToken === "") {
+        if (userId === null) {
             history.push("/");
             return;
         }
