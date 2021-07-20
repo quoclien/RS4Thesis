@@ -6,7 +6,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetAccessToken, GetViewingProduct} from "../utils/LocalStorage";
+import {GetAccessToken, GetUserId, GetViewingProduct} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
@@ -25,6 +25,7 @@ export default function ProductDetail() {
     const [thirdLine, setThirdLine] = useState([]);
     const [product, setProduct] = useState([]);
 
+    const addEventUrl = "http://127.0.0.1:5000/user/add-events";
     const productDetailUrl = "http://127.0.0.1:5000/products";
     const viewingProduct = GetViewingProduct();
     const productId = viewingProduct["product_id"];
@@ -53,6 +54,18 @@ export default function ProductDetail() {
             history.push("/");
             return;
         }
+
+        axios({
+            url: addEventUrl,
+            method: "POST",
+            data:{
+                "user_id": GetUserId(),
+                "product_id": productId,
+                "event_type" : "view"
+            }
+        }).then(res => {
+
+        });
         // Get product for product detail card
         axios.get(productDetailUrl, {
             params: {
