@@ -66,7 +66,7 @@ class CTFTextRecommender:
         self.__fitted = True
         return sim
 
-    def recommend(self, iid, n_items = 12):
+    def recommend(self, iid, n_items = 13):
         if not self.__fitted:
             raise Exception('model is not fit yet')
 

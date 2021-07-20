@@ -13,11 +13,12 @@ if pf_rec_path.is_file():
     pf_rec = joblib.load(pf_rec_path)
 
 
-@pf_rec_blueprint.route('/', methods=['GET'])
-def recommend():
+@pf_rec_blueprint.route('/<string:item_id>', methods=['GET'])
+def recommend(item_id):
     try:
         limit = req.args.get('limit', 10, type=int)
         pids = pf_rec.recommend(limit=limit)
+        if item_id in pids: pids.remove(item_id)
         cursor = db.products.find({'product_id': {'$in': pids}})
         products = [to_dict(doc) for doc in cursor]
         return {'data': products}

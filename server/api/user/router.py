@@ -40,7 +40,6 @@ def getReviews(user_id):
         # user_id = request.user['user_id']
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
-        print(user_id)
         events_colelection = db.events
         cursor = events_colelection.find({'user_id': user_id}).skip(page*limit).limit(limit)
         
@@ -52,11 +51,36 @@ def getReviews(user_id):
     except:
         return {'error': 'lấy thông tin thất bại'}
 
+@user_blueprint.route('/<string:user_id>/reviews', methods=['GET'])
+def getRatings(user_id):
+    try:
+        # user_id = request.user['user_id']
+        page = int(request.args.get('page'))
+        limit = int(request.args.get('limit'))
+        cursor = db.reviews.find({'user_id': user_id}).skip(page*limit).limit(limit)
+        
+        # products = []
+        # products_collection = db.products
+        # for doc in cursor:
+        #     products.append(products_collection.find_one({'product_id': doc['product_id']}))
+        return {'data': [to_dict(doc) for doc in cursor]}
+    except:
+        return {'error': 'lấy thông tin thất bại'}
+
 @user_blueprint.route('/<string:user_id>', methods=['GET'])
 def getInfo(user_id):
     try:
         users = db.users.find_one({'user_id': user_id})
         del users['_id']
         return {'data': users}
+    except:
+        return {'error': 'lấy thông tin thất bại'}
+
+@user_blueprint.route('/add-events', methods=['POST'])
+def addEvents():
+    try:
+        body = request.get_json()
+        db.events.insert(body)
+        return {'data': 'ok'}
     except:
         return {'error': 'lấy thông tin thất bại'}
