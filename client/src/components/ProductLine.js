@@ -70,7 +70,7 @@ export default function ProductLine(props) {
 
     function generateLineOfProducts(keys, products) {
         let data = [];
-        if (products.length > 0) {
+        if (products !== undefined) {
             for (let i = 0; i < products.length; i++) {
                 let _imageUrl, _key, _title, _subtitle;
                 _imageUrl = _key = _title = _subtitle = products[i];

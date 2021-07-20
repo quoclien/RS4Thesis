@@ -111,6 +111,7 @@ export default function UserProfile(props) {
         )
             .then(response => {
                 let productLine = response.data.data;
+                console.log(productLine);
                 setThirdLine(productLine)
             }).catch(e => {
             console.log(e)
