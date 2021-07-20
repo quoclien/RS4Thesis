@@ -19,9 +19,9 @@ export function ClearStorage() {
 };
 
 export function SetViewingProduct(product) {
-    localStorage.setItem("product", product)
+    localStorage.setItem("product", JSON.stringify(product))
 }
 
 export function GetViewingProduct() {
-    return localStorage.getItem("product")
+    return JSON.parse(localStorage.getItem("product"))
 }

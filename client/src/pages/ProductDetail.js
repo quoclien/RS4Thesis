@@ -26,11 +26,26 @@ export default function ProductDetail() {
     const [product, setProduct] = useState([]);
 
     const productDetailUrl = "http://127.0.0.1:5000/products";
-    const viewingProduct = JSON.parse(GetViewingProduct());
+    const viewingProduct = GetViewingProduct();
     const productId = viewingProduct["product_id"];
     const firstUrl = `http://127.0.0.1:5000/ctf_rec/${productId}`;
     const secondUrl = "http://127.0.0.1:5000/pf_rec";
     const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
+
+    const ctpDefaultBody = {
+        "origin": [
+            {
+                "value": "Hàn Quốc",
+                "score": 5
+            }
+        ],
+        "category": [
+            {
+                "value": "Điện thoại",
+                "score": 2
+            }
+        ]
+    };
 
     const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
@@ -77,20 +92,33 @@ export default function ProductDetail() {
             {
                 url: thirdUrl,
                 method: "POST",
-                data: {
-                    "origin": [
-                        {
-                            "value": "Hàn Quốc",
-                            "score": 5
-                        }
-                    ],
-                    "category": [
-                        {
-                            "value": "Điện thoại",
-                            "score": 2
-                        }
-                    ]
-                },
+                data: viewingProduct ?
+                    {
+                        "origin": [
+                            {
+                                "value": viewingProduct.origin,
+                                "score": 2
+                            }
+                        ],
+                        "category": [
+                            {
+                                "value": viewingProduct.category,
+                                "score": 4
+                            }
+                        ],
+                        "brand": [
+                            {
+                                "value": viewingProduct.brand,
+                                "score": 3
+                            }
+                        ],
+                        "color": [
+                            {
+                                "value": viewingProduct.color,
+                                "score": 1
+                            }
+                        ]
+                    } : ctpDefaultBody
             }
         )
             .then(response => {

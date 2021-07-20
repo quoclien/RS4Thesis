@@ -8,7 +8,7 @@ import {Container, Grid} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ProductLineKeys from "../models/ProductLineKeys";
-import {GetAccessToken, GetUserId} from "../utils/LocalStorage";
+import {GetAccessToken, GetUserId, GetViewingProduct} from "../utils/LocalStorage";
 
 export default function UserProfile(props) {
     const [userInfo, setUserInfo] = useState([]);
@@ -21,6 +21,8 @@ export default function UserProfile(props) {
     const eventUrl = `http://127.0.0.1:5000/user/${userId}/events`;
 
     const infoUrl = `http://127.0.0.1:5000/user/${userId}`;
+
+    const viewingProduct = GetViewingProduct();
 
     const accessToken = GetAccessToken();
     const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
@@ -91,6 +93,7 @@ export default function UserProfile(props) {
             console.log(e)
         });
 
+        let productIdForActions = viewingProduct ? viewingProduct["product_id"] : "1";
         // Get third recommender product line
         axios(
             {
@@ -99,7 +102,7 @@ export default function UserProfile(props) {
                 data: {
                     "actions": [
                         {
-                            "product_id": "1",
+                            "product_id": productIdForActions,
                             "rating": 3
                         }
                     ]
