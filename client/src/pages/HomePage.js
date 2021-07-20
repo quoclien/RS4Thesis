@@ -6,7 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {ExitToApp} from "@material-ui/icons";
 import history from "../utils/History";
 import InfiniteProductCardList from "../components/InfiniteProductCardList";
-import {GetUserId} from "../utils/LocalStorage";
+import {GetUserId, SetUbrBody} from "../utils/LocalStorage";
 
 const axios = require('axios').default;
 
@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 function HomePage() {
 
+    const getRatingsUrl = "http://127.0.0.1:5000/user/8/reviews";
+    const ratingKeyAllowed = ["product_id", "rating"];
+
     function handleSignOut() {
         history.push("/");
     }
@@ -32,6 +35,26 @@ function HomePage() {
         if (GetUserId() === null) {
             history.push("/");
         }
+        axios.get(getRatingsUrl, {
+            params: {
+                page: 0,
+                limit: 10
+            }
+        }).then(r => {
+            let ratings = r.data.data;
+            let result = [];
+            for (let rating of ratings)
+            {
+                rating = Object.keys(rating)
+                    .filter(key => ratingKeyAllowed.includes(key))
+                    .reduce((obj, key) => {
+                        obj[key] = rating[key];
+                        return obj;
+                    }, {});
+                result.push(rating);
+            }
+            SetUbrBody(result);
+        })
     }, [])
 
     const classes = useStyles();
