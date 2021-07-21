@@ -6,7 +6,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import history from "../utils/History";
 import ProductDetailCard from "../components/ProductDetailCard";
 import {makeStyles} from "@material-ui/core/styles";
-import {GetUserId, GetViewingProduct} from "../utils/LocalStorage";
+import {Get3RecentProducts, GetUserId, GetViewingProduct, Set3RecentProducts} from "../utils/LocalStorage";
 import ProductLine from "../components/ProductLine";
 import ProductLineKeys from "../models/ProductLineKeys";
 import axios from "axios";
@@ -106,38 +106,35 @@ export default function ProductDetail() {
             console.log(error);
         });
 
+        // Create CTP body
+        let current3RecentProducts = Get3RecentProducts();
+        if (current3RecentProducts === null)
+        {
+            current3RecentProducts = [viewingProduct];
+            Set3RecentProducts(current3RecentProducts);
+        }
+        else
+        {
+            // if current3RecentProducts not contain viewingProduct
+            if (!current3RecentProducts.some(pd => pd["product_id"] === productId))
+            {
+                // if current3RecentProducts length is >= 3
+                if (current3RecentProducts.length >= 3)
+                {
+                    current3RecentProducts.shift();
+                }
+                current3RecentProducts.push(viewingProduct);
+                Set3RecentProducts(current3RecentProducts);
+            }
+        }
+        let ctpBody = createCtpBody(current3RecentProducts);
+        console.log(ctpBody);
         // Get third recommender product line
         axios(
             {
                 url: ctpUrl,
                 method: "POST",
-                data: viewingProduct ?
-                    {
-                        "origin": [
-                            {
-                                "value": viewingProduct.origin,
-                                "score": 2
-                            }
-                        ],
-                        "category": [
-                            {
-                                "value": viewingProduct.category,
-                                "score": 4
-                            }
-                        ],
-                        "brand": [
-                            {
-                                "value": viewingProduct.brand,
-                                "score": 3
-                            }
-                        ],
-                        "color": [
-                            {
-                                "value": viewingProduct.color,
-                                "score": 1
-                            }
-                        ]
-                    } : ctpDefaultBody
+                data: ctpBody
             }
         )
             .then(response => {
@@ -147,6 +144,55 @@ export default function ProductDetail() {
             console.log(e)
         });
     }, [])
+
+    function createCtpBody(productArray)
+    {
+        const originScore = 2;
+        const brandScore = 3;
+        const categoryScore = 4;
+        const colorScore = 1;
+        let result = {
+            "origin": [
+            ],
+            "category": [
+            ],
+            "brand": [
+            ],
+            "color": [
+            ]
+        };
+        if (Array.isArray(productArray))
+        {
+            for (let pd of productArray)
+            {
+                result.origin.push(
+                    {
+                        "value": pd.origin,
+                        "score": originScore
+                    }
+                );
+                result.category.push(
+                    {
+                        "value": pd.category,
+                        "score": categoryScore
+                    }
+                );
+                result.brand.push(
+                    {
+                        "value": pd.brand,
+                        "score": brandScore
+                    }
+                );
+                result.color.push(
+                    {
+                        "value": pd.color,
+                        "score": colorScore
+                    }
+                );
+            }
+        }
+        return result;
+    }
 
     function handleOpenHomePage() {
         history.push("/home");
