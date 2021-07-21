@@ -96,7 +96,8 @@ export default function UserProfile(props) {
             console.log(e)
         });
 
-        const ubrBody = GetUbrBody();
+        let ubrBody = createUbrBody(GetUbrBody());
+
         // Get third recommender product line
         axios(
             {
@@ -110,12 +111,23 @@ export default function UserProfile(props) {
             .then(response => {
                 let productLine = response.data.data;
                 console.log(ubrBody);
-                console.log(response.data);
                 setThirdLine(productLine)
             }).catch(e => {
             console.log(e)
         });
     }, []);
+
+    function createUbrBody(array)
+    {
+        if (Array.isArray(array))
+        {
+            for (let obj of array)
+            {
+                obj.rating = parseInt(obj.rating);
+            }
+        }
+        return array;
+    }
 
     function handleOpenHomePage() {
         history.push("/home");
