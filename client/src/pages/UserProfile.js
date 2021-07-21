@@ -13,9 +13,9 @@ import {GetAccessToken, GetUserId, GetViewingProduct} from "../utils/LocalStorag
 export default function UserProfile(props) {
     const [userInfo, setUserInfo] = useState([]);
     const [events, setEvents] = useState([]);
-    const [firstLine, setFirstLine] = useState([]);
-    const [secondLine, setSecondLine] = useState([]);
-    const [thirdLine, setThirdLine] = useState([]);
+    const [ucfData, setUcfData] = useState([]);
+    const [iirData, setIirData] = useState([]);
+    const [ubrData, setUbrData] = useState([]);
 
     const userId = GetUserId();
     const eventUrl = `http://127.0.0.1:5000/user/${userId}/events`;
@@ -27,9 +27,9 @@ export default function UserProfile(props) {
     const accessToken = GetAccessToken();
     const productLineKeys = new ProductLineKeys("product_id", "name", "price", "image");
 
-    const firstUrl = `http://127.0.0.1:5000/ucf_rec/${userId}`;
-    const secondUrl = "http://127.0.0.1:5000/iir_rec/wilson";
-    const thirdUrl = "http://127.0.0.1:5000/ubr_rec/";
+    const ucfUrl = `http://127.0.0.1:5000/ucf_rec/${userId}`;
+    const iirUrl = "http://127.0.0.1:5000/iir_rec/wilson";
+    const ubrUrl = "http://127.0.0.1:5000/ubr_rec/";
 
     const lineKeys = new ProductLineKeys("product_id", "name", "price", "image");
     useEffect(() => {
@@ -66,7 +66,7 @@ export default function UserProfile(props) {
         });
 
         // Get first recommender product line
-        axios.get(firstUrl, {
+        axios.get(ucfUrl, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Authorization": "Bearer " + accessToken,
@@ -77,7 +77,7 @@ export default function UserProfile(props) {
             }
         }).then(response => {
             let events = response.data.data;
-            setFirstLine(events);
+            setUcfData(events);
         }).catch(error => {
             console.log(error);
         });
@@ -85,13 +85,13 @@ export default function UserProfile(props) {
         // Get second recommender product line
         axios(
             {
-                url: secondUrl,
+                url: iirUrl,
                 method: "GET",
             }
         )
             .then(response => {
                 let productLine = response.data.data;
-                setSecondLine(productLine);
+                setIirData(productLine);
             }).catch(e => {
             console.log(e)
         });
@@ -100,7 +100,7 @@ export default function UserProfile(props) {
         // Get third recommender product line
         axios(
             {
-                url: thirdUrl,
+                url: ubrUrl,
                 method: "POST",
                 data: {
                     "actions": [
@@ -115,7 +115,7 @@ export default function UserProfile(props) {
             .then(response => {
                 let productLine = response.data.data;
                 console.log(productLine);
-                setThirdLine(productLine)
+                setUbrData(productLine)
             }).catch(e => {
             console.log(e)
         });
@@ -147,7 +147,7 @@ export default function UserProfile(props) {
                     <Grid item xs={12}>
                         <ProductLine
                             lineTitle={"Recommendations based on users with similar behavior:"}
-                            lineOfProducts={firstLine}
+                            lineOfProducts={ucfData}
                             lineKeys={lineKeys}
                         >
                         </ProductLine>
@@ -155,7 +155,7 @@ export default function UserProfile(props) {
                     <Grid item xs={12}>
                         <ProductLine
                             lineTitle={"Recommendations based on good ratings:"}
-                            lineOfProducts={secondLine}
+                            lineOfProducts={iirData}
                             lineKeys={lineKeys}
                         >
                         </ProductLine>
@@ -163,7 +163,7 @@ export default function UserProfile(props) {
                     <Grid item xs={12}>
                         <ProductLine
                             lineTitle={"Recommendations based on similar rating history:"}
-                            lineOfProducts={thirdLine}
+                            lineOfProducts={ubrData}
                             lineKeys={lineKeys}
                         >
                         </ProductLine>

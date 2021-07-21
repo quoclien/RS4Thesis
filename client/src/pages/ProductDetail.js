@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductDetail() {
     const classes = useStyles();
-    const [firstLine, setFirstLine] = useState([]);
-    const [secondLine, setSecondLine] = useState([]);
-    const [thirdLine, setThirdLine] = useState([]);
+    const [ctfData, setCtfData] = useState([]);
+    const [pfData, setPfData] = useState([]);
+    const [ctpData, setCtpData] = useState([]);
     const [product, setProduct] = useState([]);
 
     const userId = GetUserId();
@@ -30,9 +30,9 @@ export default function ProductDetail() {
     const productDetailUrl = "http://127.0.0.1:5000/products";
     const viewingProduct = GetViewingProduct();
     let productId;
-    const firstUrl = `http://127.0.0.1:5000/ctf_rec/`;
-    const secondUrl = "http://127.0.0.1:5000/pf_rec/null";
-    const thirdUrl = "http://127.0.0.1:5000/ctp_rec/get";
+    const ctfUrl = `http://127.0.0.1:5000/ctf_rec/`;
+    const pfUrl = "http://127.0.0.1:5000/pf_rec/null";
+    const ctpUrl = "http://127.0.0.1:5000/ctp_rec/get";
 
     const ctpDefaultBody = {
         "origin": [
@@ -86,22 +86,22 @@ export default function ProductDetail() {
         });
 
         // Get first recommender product line
-        axios.get(firstUrl + productId).then(response => {
+        axios.get(ctfUrl + productId).then(response => {
             let productLine = response.data.data;
-            setFirstLine(productLine);
+            setCtfData(productLine);
         }).catch(e => {
             console.log(e)
         });
 
         // Get second recommender product line
-        axios.get(secondUrl, {
+        axios.get(pfUrl, {
             params: {
                 page: 0,
                 limit: 10
             }
         }).then(response => {
-            let events = response.data.data;
-            setSecondLine(events);
+            let productLine = response.data.data;
+            setPfData(productLine);
         }).catch(error => {
             console.log(error);
         });
@@ -109,7 +109,7 @@ export default function ProductDetail() {
         // Get third recommender product line
         axios(
             {
-                url: thirdUrl,
+                url: ctpUrl,
                 method: "POST",
                 data: viewingProduct ?
                     {
@@ -142,7 +142,7 @@ export default function ProductDetail() {
         )
             .then(response => {
                 let productLine = response.data.data;
-                setThirdLine(productLine);
+                setCtpData(productLine);
             }).catch(e => {
             console.log(e)
         });
@@ -178,7 +178,7 @@ export default function ProductDetail() {
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"Recommendations based on text"}
-                        lineOfProducts={firstLine}
+                        lineOfProducts={ctfData}
                         lineKeys={lineKeys}
                     >
                     </ProductLine>
@@ -186,7 +186,7 @@ export default function ProductDetail() {
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"Recommendations based on behavioral history"}
-                        lineOfProducts={secondLine}
+                        lineOfProducts={pfData}
                         lineKeys={lineKeys}
                     >
                     </ProductLine>
@@ -194,7 +194,7 @@ export default function ProductDetail() {
                 <Grid item xs={12}>
                     <ProductLine
                         lineTitle={"Recommendations based on product's properties"}
-                        lineOfProducts={thirdLine}
+                        lineOfProducts={ctpData}
                         lineKeys={lineKeys}
                     >
                     </ProductLine>
