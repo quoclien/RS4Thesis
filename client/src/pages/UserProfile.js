@@ -8,7 +8,7 @@ import {Container, Grid} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ProductLineKeys from "../models/ProductLineKeys";
-import {GetAccessToken, GetUserId, GetViewingProduct} from "../utils/LocalStorage";
+import {GetAccessToken, GetUbrBody, GetUserId, GetViewingProduct} from "../utils/LocalStorage";
 
 export default function UserProfile(props) {
     const [userInfo, setUserInfo] = useState([]);
@@ -96,30 +96,37 @@ export default function UserProfile(props) {
             console.log(e)
         });
 
-        let productIdForActions = viewingProduct ? viewingProduct["product_id"] : "1";
+        let ubrBody = createUbrBody(GetUbrBody());
+
         // Get third recommender product line
         axios(
             {
                 url: ubrUrl,
                 method: "POST",
                 data: {
-                    "actions": [
-                        {
-                            "product_id": productIdForActions,
-                            "rating": 3
-                        }
-                    ]
+                    "actions": ubrBody,
                 },
             }
         )
             .then(response => {
                 let productLine = response.data.data;
-                console.log(productLine);
-                setUbrData(productLine)
+                setUbrData(productLine);
             }).catch(e => {
             console.log(e)
         });
     }, []);
+
+    function createUbrBody(array)
+    {
+        if (Array.isArray(array))
+        {
+            for (let obj of array)
+            {
+                obj.rating = parseInt(obj.rating);
+            }
+        }
+        return array;
+    }
 
     function handleOpenHomePage() {
         history.push("/home");

@@ -33,3 +33,10 @@ export function Set3RecentProducts(array) {
 export function Get3RecentProducts() {
     return JSON.parse(localStorage.getItem("3RecentProducts"))
 }
+export function SetUbrBody(ratings) {
+    localStorage.setItem("ubrBody", JSON.stringify(ratings))
+}
+
+export function GetUbrBody() {
+    return JSON.parse(localStorage.getItem("ubrBody"))
+}
