@@ -146,7 +146,7 @@ export default function UserProfile(props) {
                 <Grid container style={{marginTop: "20px"}}>
                     <Grid item xs={12}>
                         <ProductLine
-                            lineTitle={"UCF"}
+                            lineTitle={"Recommendations based on users with similar behavior:"}
                             lineOfProducts={firstLine}
                             lineKeys={lineKeys}
                         >
@@ -154,7 +154,7 @@ export default function UserProfile(props) {
                     </Grid>
                     <Grid item xs={12}>
                         <ProductLine
-                            lineTitle={"IIR"}
+                            lineTitle={"Recommendations based on good ratings:"}
                             lineOfProducts={secondLine}
                             lineKeys={lineKeys}
                         >
@@ -162,7 +162,7 @@ export default function UserProfile(props) {
                     </Grid>
                     <Grid item xs={12}>
                         <ProductLine
-                            lineTitle={"UBR"}
+                            lineTitle={"Recommendations based on similar rating history:"}
                             lineOfProducts={thirdLine}
                             lineKeys={lineKeys}
                         >

@@ -25,3 +25,11 @@ export function SetViewingProduct(product) {
 export function GetViewingProduct() {
     return JSON.parse(localStorage.getItem("product"))
 }
+
+export function Set3RecentProducts(array) {
+    localStorage.setItem("3RecentProducts", JSON.stringify(array))
+}
+
+export function Get3RecentProducts() {
+    return JSON.parse(localStorage.getItem("3RecentProducts"))
+}

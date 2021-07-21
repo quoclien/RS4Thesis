@@ -58,6 +58,7 @@ export default function ProductDetail() {
 
         productId = viewingProduct["product_id"];
 
+        // Add view event with the current product
         axios({
             url: addEventUrl,
             method: "POST",
@@ -69,6 +70,8 @@ export default function ProductDetail() {
         }).then(res => {
 
         });
+
+
         // Get product for product detail card
         axios.get(productDetailUrl, {
             params: {
@@ -174,7 +177,7 @@ export default function ProductDetail() {
             <Grid container className={classes.content}>
                 <Grid item xs={12}>
                     <ProductLine
-                        lineTitle={"CTF"}
+                        lineTitle={"Recommendations based on text"}
                         lineOfProducts={firstLine}
                         lineKeys={lineKeys}
                     >
@@ -182,7 +185,7 @@ export default function ProductDetail() {
                 </Grid>
                 <Grid item xs={12}>
                     <ProductLine
-                        lineTitle={"PF"}
+                        lineTitle={"Recommendations based on behavioral history"}
                         lineOfProducts={secondLine}
                         lineKeys={lineKeys}
                     >
@@ -190,7 +193,7 @@ export default function ProductDetail() {
                 </Grid>
                 <Grid item xs={12}>
                     <ProductLine
-                        lineTitle={"CTP"}
+                        lineTitle={"Recommendations based on product's properties"}
                         lineOfProducts={thirdLine}
                         lineKeys={lineKeys}
                     >
